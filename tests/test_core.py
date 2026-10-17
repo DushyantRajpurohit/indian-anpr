@@ -36,3 +36,11 @@ def test_wilson_matches_textbook():
     # 140/200 = 70% -> about +/-6 points, the bound quoted in the README
     lo, hi = metrics.wilson(140, 200)
     assert round(lo, 3) == 0.633 and round(hi, 3) == 0.759
+
+
+def test_read_lines_orders_two_line_plates():
+    from anpr.evaluate import read_lines
+    box = lambda x, y: [[x, y], [x + 40, y], [x + 40, y + 20], [x, y + 20]]
+    # EasyOCR returns boxes in arbitrary order; bottom line first here.
+    results = [(box(50, 40), "1234", 0.9), (box(60, 2), "14", 0.9), (box(0, 0), "RJ", 0.9), (box(0, 42), "CD", 0.9)]
+    assert read_lines(results) == "RJ14CD1234"
