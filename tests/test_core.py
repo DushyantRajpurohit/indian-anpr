@@ -1,0 +1,38 @@
+import pytest
+
+from anpr import metrics, plate
+
+
+@pytest.mark.parametrize("raw, want", [
+    ("RJ14CD1234", "RJ 14 CD 1234"),      # already clean
+    ("rj 14 cd 1234", "RJ 14 CD 1234"),   # spacing / case
+    ("RJ1ACD1234", "RJ 14 CD 1234"),      # A in a digit slot -> 4
+    ("RJ14C01234", "RJ 14 CO 1234"),      # 0 in a letter slot -> O
+    ("8R0IAB1Z34", "BR 01 AB 1234"),      # several confusions at once
+    ("DL3CAB1234", "DL 3 CAB 1234"),      # Delhi: one-digit district, 3-letter series
+    ("MH12A5", "MH 12 A 5"),              # short number
+    ("IND RJ14CD1234", "RJ 14 CD 1234"),  # HSRP 'IND' strip read as text
+    ("22BH1234AA", "22 BH 1234 AA"),      # Bharat series
+    ("22 8H 1234 A", "22 BH 1234 A"),
+])
+def test_correct_fixes_by_position(raw, want):
+    assert plate.correct(raw) == want
+
+
+@pytest.mark.parametrize("raw", ["XX14CD1234", "HELLO", "", "RJ14CD12345678"])
+def test_correct_rejects_non_plates(raw):
+    assert plate.correct(raw) is None
+
+
+def test_score():
+    s = metrics.score(["RJ 14 CD 1234", "RJ14CD1235", None], ["RJ14CD1234"] * 3)
+    assert s["n"] == 3 and s["exact"] == pytest.approx(1 / 3)
+    assert s["cer"] == pytest.approx((0 + 1 + 10) / 30)
+    lo, hi = s["exact_ci"]
+    assert lo < 1 / 3 < hi
+
+
+def test_wilson_matches_textbook():
+    # 140/200 = 70% -> about +/-6 points, the bound quoted in the README
+    lo, hi = metrics.wilson(140, 200)
+    assert round(lo, 3) == 0.633 and round(hi, 3) == 0.759
