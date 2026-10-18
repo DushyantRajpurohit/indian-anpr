@@ -62,3 +62,18 @@ def test_is_valid_flags_bad_labels():
     assert data.is_valid("RJ01AB1234")
     assert not data.is_valid("RJD1AB1234")  # typo the corrector would have to change
     assert not data.is_valid("CRETA")
+
+
+def test_reader_shapes_and_ctc_decode():
+    import numpy as np
+    import torch
+    from anpr import reader
+    one = reader.prep(np.zeros((30, 150, 3), np.uint8))       # single-line crop
+    two = reader.prep(np.zeros((100, 160, 3), np.uint8) + 7)  # two-line crop gets split
+    assert one.shape == two.shape == (1, reader.H, reader.W)
+    out = reader.CRNN()(torch.from_numpy(np.stack([one, two])))
+    assert out.shape == (2, reader.W // 4, len(reader.CHARS) + 1)
+    # blank=0; 'RJ' then repeated '1' separated by blank decodes to 'RJ11'
+    ids = [0] + reader.encode("RR") + [0] + reader.encode("J") + reader.encode("1") + [0] + reader.encode("1")
+    logp = np.eye(len(reader.CHARS) + 1)[ids]
+    assert reader.decode(logp) == "RJ11"

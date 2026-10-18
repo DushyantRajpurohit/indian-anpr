@@ -38,22 +38,22 @@ def render(rng):
     if two and rng.random() < 0.4 and len(parts) == 4:  # 'RJ 14 CD' over '1234'
         lines = [" ".join(parts[:3]), parts[3]]
     bg, fg = rng.choice(SCHEMES)
-    font = ImageFont.truetype(str(rng.choice(FONTS)), 64)
+    font = ImageFont.truetype(str(rng.choice(FONTS)), 36)
 
     sizes = [font.getbbox(t) for t in lines]
     tw, lh = max(b[2] - b[0] for b in sizes), max(b[3] - b[1] for b in sizes)
-    strip = 30 if rng.random() < 0.6 else 0  # HSRP blue 'IND' strip
-    W, H = tw + strip + 40, lh * len(lines) + 18 * len(lines) + 16
+    strip = 17 if rng.random() < 0.6 else 0  # HSRP blue 'IND' strip
+    W, H = tw + strip + 22, lh * len(lines) + 10 * len(lines) + 10
     im = Image.new("RGB", (W, H), bg)
     d = ImageDraw.Draw(im)
-    d.rectangle([2, 2, W - 3, H - 3], outline=fg, width=3)
+    d.rectangle([2, 2, W - 3, H - 3], outline=fg, width=2)
     if strip:
-        d.rectangle([6, 6, 6 + strip - 6, H - 7], fill=(25, 60, 160))
-        d.text((8, H - 22), "IND", fill=(240, 240, 240), font=ImageFont.truetype(str(FONTS[0]), 11))
-    y = 10
+        d.rectangle([4, 4, 4 + strip - 4, H - 5], fill=(25, 60, 160))
+        d.text((5, H - 13), "IND", fill=(240, 240, 240), font=ImageFont.truetype(str(FONTS[0]), 7))
+    y = 6
     for t, b in zip(lines, sizes):
-        d.text((strip + 20 + (tw - (b[2] - b[0])) // 2 - b[0], y - b[1]), t, fill=fg, font=font)
-        y += lh + 18
+        d.text((strip + 11 + (tw - (b[2] - b[0])) // 2 - b[0], y - b[1]), t, fill=fg, font=font)
+        y += lh + 10
     return degrade(np.array(im)[:, :, ::-1].copy(), rng), "".join(parts), two
 
 
@@ -64,11 +64,11 @@ def degrade(img, rng):
     src = np.float32([[0, 0], [w, 0], [w, h], [0, h]])
     dst = np.float32([[j(.06) * w, j(.12) * h], [w + j(.06) * w, j(.12) * h],
                       [w + j(.06) * w, h + j(.12) * h], [j(.06) * w, h + j(.12) * h]])
-    pad = rng.randint(0, 40)
+    pad = rng.randint(0, 22)
     bg = tuple(int(c) for c in rng.choice(((30, 30, 30), (120, 120, 120), (200, 200, 200))))
     img = cv2.warpPerspective(img, cv2.getPerspectiveTransform(src, dst + pad), (w + 2 * pad, h + 2 * pad),
                               borderValue=bg)
-    scale = rng.uniform(0.15, 0.7)  # real crops are often 60-150 px wide
+    scale = rng.uniform(0.3, 1.0)  # real crops are often 60-150 px wide
     small = cv2.resize(img, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
     img = cv2.resize(small, (img.shape[1], img.shape[0]), interpolation=cv2.INTER_LINEAR)
     if rng.random() < 0.5:
@@ -77,7 +77,7 @@ def degrade(img, rng):
     img = img.astype(np.float32) * rng.uniform(0.4, 1.3) + rng.uniform(-40, 40)
     if rng.random() < 0.3:  # shadow or glare band
         x = rng.randint(0, img.shape[1])
-        img[:, x:x + rng.randint(10, img.shape[1] // 2)] *= rng.uniform(0.4, 1.6)
+        img[:, x:x + rng.randint(6, img.shape[1] // 2)] *= rng.uniform(0.4, 1.6)
     img += np.random.default_rng(rng.randint(0, 2**31)).normal(0, rng.uniform(0, 12), img.shape)
     img = np.clip(img, 0, 255).astype(np.uint8)
     ok, buf = cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, rng.randint(20, 90)])
