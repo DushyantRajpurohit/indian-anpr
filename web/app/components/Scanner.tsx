@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type * as OrtNS from "onnxruntime-web";
 import {
   correct, decode, letterbox, parseDetections, prepCrop, READER_H, READER_W, Tracker,
-  type Confirmed, type Read,
+  type Confirmed, type Read, type Reading,
 } from "@/lib/anpr";
 import { partName } from "@/lib/states";
 import { Arrow, asset, Chars, pct } from "./ui";
@@ -13,14 +13,13 @@ const MAX_PLATES = 4;
 
 type Entry = { at: Date; tag: string; text: string; warn?: boolean };
 type Models = { ort: typeof OrtNS; det: OrtNS.InferenceSession; rdr: OrtNS.InferenceSession };
-type Box = { box: number[]; label: string; done: boolean };
+type Box = { box: number[]; label: string; done: boolean; reading?: Reading | null };
 
 const clock = (d: Date) => d.toLocaleTimeString("en-GB", { hour12: false });
 
 export default function Scanner() {
   const video = useRef<HTMLVideoElement>(null);
   const overlay = useRef<HTMLCanvasElement>(null);
-  const still = useRef<HTMLImageElement>(null);
   const work = useRef<{ det: HTMLCanvasElement; rdr: HTMLCanvasElement } | null>(null);
   const models = useRef<Models | null>(null);
   const stream = useRef<MediaStream | null>(null);
@@ -29,6 +28,7 @@ export default function Scanner() {
 
   const [available, setAvailable] = useState<boolean | null>(null);
   const [mode, setMode] = useState<"idle" | "camera" | "photo">("idle");
+  const [photo, setPhoto] = useState<string | null>(null);
   const [fps, setFps] = useState<number | null>(null);
   const [ledger, setLedger] = useState<Confirmed[]>([]);
   const [log, setLog] = useState<Entry[]>([]);
@@ -70,7 +70,7 @@ export default function Scanner() {
     const lb = letterbox(src, w, h, work.current!.det);
     const out = await det.run({ [det.inputNames[0]]: new ort.Tensor("float32", lb.tensor, [1, 3, 640, 640]) });
     const o = out[det.outputNames[0]];
-    const found = parseDetections(o.data as Float32Array, o.dims[1], lb).sort((a, b) => b.score - a.score).slice(0, MAX_PLATES);
+    const found = parseDetections(o.data as Float32Array, o.dims, lb).sort((a, b) => b.score - a.score).slice(0, MAX_PLATES);
     const plates: { box: number[]; read: Read | null; raw: string }[] = [];
     for (const f of found) {
       const box = [Math.max(0, f.box[0]), Math.max(0, f.box[1]), Math.min(w, f.box[2]), Math.min(h, f.box[3])];
@@ -99,11 +99,17 @@ export default function Scanner() {
       g.strokeStyle = "#f4f2ee";
       g.setLineDash(b.done ? [] : [6 * s, 4 * s]);
       g.strokeRect(x1, y1, x2 - x1, y2 - y1);
-      const tw = g.measureText(b.label).width + 12 * s;
-      g.fillStyle = b.done ? "#e0218a" : "#121212";
+      // Label in ink; only characters the plate grammar changed are magenta.
+      const chars = b.reading ? b.reading.parts.flatMap((p, i) => [...(i ? [{ c: " ", fix: false }] : []), ...p.split("").map((c, j) => ({ c, fix: b.reading!.changed[i][j] }))]) : b.label.split("").map((c) => ({ c, fix: false }));
+      const tw = g.measureText(chars.map((x) => x.c).join("")).width + 12 * s;
+      g.fillStyle = "#121212";
       g.fillRect(x1, y1 - 22 * s, tw, 20 * s);
-      g.fillStyle = "#f4f2ee";
-      g.fillText(b.label, x1 + 6 * s, y1 - 7 * s);
+      let x = x1 + 6 * s;
+      for (const ch of chars) {
+        g.fillStyle = ch.fix ? "#e0218a" : "#f4f2ee";
+        g.fillText(ch.c, x, y1 - 7 * s);
+        x += g.measureText(ch.c).width;
+      }
     }
   }
 
@@ -134,7 +140,7 @@ export default function Scanner() {
           done.forEach((d) => print("Read", `${d.reading.text} confirmed by ${d.votes} frames.`));
         }
         const active = tracker.current.active;
-        draw(plates.map((p) => ({ box: p.box, label: p.read ? p.read.reading.text : "reading…", done: active.some((a) => a.done && a.box === p.box) })), w, h);
+        draw(plates.map((p) => ({ box: p.box, label: "reading…", reading: p.read?.reading, done: active.some((a) => a.done && a.box === p.box) })), w, h);
         frames += 1;
         if (now - t0 > 1000) { setFps((frames * 1000) / (now - t0)); frames = 0; t0 = now; }
         requestAnimationFrame(loop);
@@ -151,9 +157,10 @@ export default function Scanner() {
   async function openPhoto(file: File) {
     stop();
     const url = URL.createObjectURL(file);
-    const img = still.current!;
+    const img = new Image();
     img.src = url;
     await img.decode();
+    setPhoto((old) => { if (old) URL.revokeObjectURL(old); return url; });
     setMode("photo");
     print("Photo", `${file.name}, ${img.naturalWidth} × ${img.naturalHeight}. Read locally; not uploaded.`);
     if (!available) return;
@@ -163,7 +170,7 @@ export default function Scanner() {
       const found = plates.filter((p) => p.read);
       const at = new Date();
       setLedger((l) => [...found.map((p, i) => ({ id: Date.now() + i, reading: p.read!.reading, conf: p.read!.conf, votes: 1, frames: 1, at })), ...l].slice(0, 50));
-      draw(plates.map((p) => ({ box: p.box, label: p.read ? p.read.reading.text : p.raw || "unreadable", done: !!p.read })), img.naturalWidth, img.naturalHeight);
+      draw(plates.map((p) => ({ box: p.box, label: p.raw || "unreadable", reading: p.read?.reading, done: !!p.read })), img.naturalWidth, img.naturalHeight);
       print("Read", plates.length ? `${plates.length} plate${plates.length > 1 ? "s" : ""} found, ${found.length} read.` : "No plate found in this photo.", !found.length);
     } catch (e) {
       print("Error", `Reading failed: ${(e as Error).message}`, true);
@@ -193,7 +200,7 @@ export default function Scanner() {
         <div>
           <div className="window">
             <video ref={video} playsInline muted hidden={mode !== "camera"} />
-            <img ref={still} className="still" alt="The photo you opened" hidden={mode !== "photo"} />
+            {mode === "photo" && photo && <img className="still" src={photo} alt="The photo you opened" />}
             <canvas ref={overlay} className="overlay" aria-hidden="true" />
             {mode === "idle" && (
               <div className="idle">
@@ -216,15 +223,14 @@ export default function Scanner() {
         <div className="ledger">
           <div className="ledger-scroll">
             <table className="table" aria-label="Plates read">
-              <thead><tr><th>Plate</th><th>State</th><th>Confidence</th><th>Frames</th><th>Time</th></tr></thead>
+              <thead><tr><th>Plate</th><th>Confidence</th><th>Frames</th><th>Time</th></tr></thead>
               <tbody aria-live="polite">
                 {ledger.length === 0 && (
-                  <tr className="held"><td colSpan={5}><span className="held-back legend">empty · confirmed plates land here</span></td></tr>
+                  <tr className="held"><td colSpan={4}><span className="held-back legend">empty · confirmed plates land here</span></td></tr>
                 )}
                 {ledger.map((e) => (
                   <tr key={e.id} className="drop">
-                    <td><Chars reading={e.reading} /></td>
-                    <td className="muted">{partName(e.reading.parts, 0)}</td>
+                    <td><Chars reading={e.reading} /><span className="muted state-name">{partName(e.reading.parts, 0)}</span></td>
                     <td className="qty"><span className="zone-cell" style={{ width: 16, height: 12, marginRight: 8, background: `var(--z${Math.round(e.conf * 10)})` }} />{pct(e.conf)}</td>
                     <td className="qty">{e.frames}</td>
                     <td className="qty">{clock(e.at)}</td>

@@ -25,3 +25,14 @@ let got = 0;
 for (let f = 0; f < 4; f++) got += tr.update([{ box: box.map((v) => v + f), read: read("MH12AB1234") }], f * 100).length;
 assert.equal(got, 1); // confirmed once, after three agreeing frames
 console.log(`ok: ${vectors.length} parity vectors, decode, vote, tracker`);
+
+// Raw YOLO head (1, 5, A): two overlapping anchors on one plate and one weak anchor collapse to one box.
+{
+  const { parseDetections } = await import("./anpr.ts");
+  const A = 3, raw = new Float32Array(5 * A);
+  [[100, 50, 80, 20, 0.9], [102, 51, 80, 20, 0.8], [300, 300, 50, 20, 0.1]].forEach((v, a) => v.forEach((x, k) => (raw[k * A + a] = x)));
+  const got = parseDetections(raw, [1, 5, A], { scale: 0.5, px: 0, py: 0 });
+  assert.equal(got.length, 1);
+  assert.deepEqual(got[0].box, [120, 80, 280, 120]); // back to source pixels at scale 0.5
+  console.log("ok: raw-head NMS");
+}

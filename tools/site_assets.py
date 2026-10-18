@@ -25,10 +25,15 @@ def baseline():
     # Re-score from the per-image rows with the current metric (rejected readings fall back to raw).
     truths = [r["truth"] for r in b["rows"]]
     corrected = metrics.score([r["corrected"] or r["raw"] for r in b["rows"]], truths)
+    f = json.loads(Path("reports/finetuned_easyocr.json").read_text())
+    ft = [r["truth"] for r in f["rows"]]
     return {
         "images": b["images"], "plates": b["plates"], "detection_recall": b["detection_recall@0.5"],
+        "finetuned_recall": f["detection_recall@0.5"],
         "rows": [row("Old detector + EasyOCR", metrics.score([r["raw"] for r in b["rows"]], truths)),
-                 row("+ plate grammar corrector", corrected)],
+                 row("+ plate grammar corrector", corrected),
+                 row("Fine-tuned detector + EasyOCR + corrector",
+                     metrics.score([r["corrected"] or r["raw"] for r in f["rows"]], ft))],
     }
 
 
@@ -102,8 +107,17 @@ if __name__ == "__main__":
     tiles = [cv2.resize(synth.render(random.Random(100 + i))[0], (320, 110)) for i in range(12)]
     write("synthetic-grid.png", np.vstack([np.hstack(tiles[i:i + 4]) for i in range(0, 12, 4)]))
 
-    site = {"baseline": baseline(), "audit": audit(), "corrector": corrector_examples(),
-            "pending": ["Fine-tuned detector (YOLO26n)", "Synthetic-trained reader", "+ multi-frame voting"],
+    # The Detect sheet shows a real detector run: the plate on a grey field and the box it returned.
+    from ultralytics import YOLO
+    frame = cv2.copyMakeBorder(hero, 300, 300, 300, 300, cv2.BORDER_CONSTANT, value=(120, 120, 120))
+    write("detect-frame.png", frame)
+    b = YOLO("models/plate_det.pt")(frame, verbose=False)[0].boxes
+    H, W = frame.shape[:2]
+    x1, y1, x2, y2 = b.xyxy[0].tolist()
+    detect = {"box": [x1 / W, y1 / H, (x2 - x1) / W, (y2 - y1) / H], "conf": float(b.conf[0])}
+
+    site = {"baseline": baseline(), "audit": audit(), "corrector": corrector_examples(), "detect": detect,
+            "pending": ["Synthetic-trained reader (replaces EasyOCR)", "+ multi-frame voting (video frames)"],
             "states": sorted(plate.STATES)}
     (WEB / "data/site.json").write_text(json.dumps(site, indent=2))
     print(json.dumps({k: v for k, v in site.items() if k != "states"}, indent=1)[:2500])

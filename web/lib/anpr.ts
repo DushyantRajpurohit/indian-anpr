@@ -173,15 +173,29 @@ export function letterbox(src: CanvasImageSource, sw: number, sh: number, work: 
   return { tensor: t, scale, px, py };
 }
 
-export function parseDetections(out: Float32Array, rows: number, lb: { scale: number; px: number; py: number }, minScore = 0.35) {
+/** Detector output to boxes in source pixels. Accepts the end-to-end export (1, N, 6: x1,y1,x2,y2,score,cls)
+ *  or the raw head (1, 5, A: cx,cy,w,h,score per anchor), which needs NMS. */
+export function parseDetections(out: Float32Array, dims: readonly number[], lb: { scale: number; px: number; py: number }, minScore = 0.35) {
+  const m = (v: number, p: number) => (v - p) / lb.scale;
   const boxes: { box: number[]; score: number }[] = [];
-  for (let r = 0; r < rows; r++) {
-    const o = r * 6;
-    if (out[o + 4] < minScore) continue;
-    const m = (v: number, p: number) => (v - p) / lb.scale;
-    boxes.push({ box: [m(out[o], lb.px), m(out[o + 1], lb.py), m(out[o + 2], lb.px), m(out[o + 3], lb.py)], score: out[o + 4] });
+  if (dims[2] === 6) {
+    for (let r = 0; r < dims[1]; r++) {
+      const o = r * 6;
+      if (out[o + 4] >= minScore) boxes.push({ box: [m(out[o], lb.px), m(out[o + 1], lb.py), m(out[o + 2], lb.px), m(out[o + 3], lb.py)], score: out[o + 4] });
+    }
+    return boxes;
   }
-  return boxes;
+  const A = dims[2];
+  for (let a = 0; a < A; a++) {
+    const s = out[4 * A + a];
+    if (s < minScore) continue;
+    const cx = out[a], cy = out[A + a], w = out[2 * A + a], h = out[3 * A + a];
+    boxes.push({ box: [m(cx - w / 2, lb.px), m(cy - h / 2, lb.py), m(cx + w / 2, lb.px), m(cy + h / 2, lb.py)], score: s });
+  }
+  boxes.sort((x, y) => y.score - x.score);
+  const keep: typeof boxes = [];
+  for (const b of boxes) if (keep.every((k) => iou(k.box, b.box) < 0.5)) keep.push(b);
+  return keep;
 }
 
 export function iou(a: number[], b: number[]) {

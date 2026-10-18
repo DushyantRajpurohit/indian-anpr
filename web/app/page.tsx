@@ -29,19 +29,15 @@ export default function Home() {
           <div><div className="legend muted">System</div><div className="v">indian-anpr</div></div>
           <div><div className="legend muted">Detector</div><div className="v">YOLO26n · fine-tuned</div></div>
           <div><div className="legend muted">Reader</div><div className="v">CRNN · 0.69M params</div></div>
-          <div><div className="legend muted">Test set</div><div className="v">{a.test_images} images · {a.test_plates} plates</div></div>
-          <div><div className="legend muted">Status</div><div className="v">models training</div></div>
+          <div><div className="legend muted">Test set</div><div className="v">{a.test_images} img · {a.test_plates} plates</div></div>
+          <div><div className="legend muted">Status</div><div className="v">reader training</div></div>
           <a href={REPO} className="legend">Repo <Arrow /></a>
         </div>
 
         <section className="hero" id="record" aria-labelledby="h-hero">
           <div className="hero-copy">
             <h1 className="display" id="h-hero">Read the plate.<br />Prove it.</h1>
-            <p className="dek">
-              I built a number plate reader for Indian roads and measured every step: the traps in the data, the
-              rules of the plate, a reader trained only on synthetic plates. It runs on your camera, inside this page.
-              Nothing is uploaded.
-            </p>
+            <p className="dek">An Indian number plate reader I measured end to end. It runs on your camera, inside this page; nothing is uploaded.</p>
             <div className="hero-actions">
               <a className="btn primary" href="#live"><span>Open the live scanner</span><span className="tag"><Arrow /></span></a>
               <a className="link-legend" href="#pipeline">Read how it was built</a>
@@ -63,10 +59,10 @@ export default function Home() {
               <table className="table">
                 <thead><tr><th>Step</th><th>Stage</th><th>Output</th><th>Note</th></tr></thead>
                 <tbody>
-                  <tr><td className="qty">1</td><td>Detect</td><td className="legend">plate found</td><td className="muted">old detector: {pct(site.baseline.detection_recall)} of test plates</td></tr>
+                  <tr><td className="qty">1</td><td>Detect</td><td className="legend">plate found</td><td className="muted">finds {pct(site.baseline.finetuned_recall)} of test plates</td></tr>
                   <tr><td className="qty">2</td><td>Crop</td><td><img className="thumb" src={asset("/plates/reader-input.png")} alt="The 32 by 160 grey strip the reader sees" /></td><td className="muted">32 × 160 greys</td></tr>
                   <tr><td className="qty">3</td><td>Read</td><td><Chars raw="RJ1ACD1234" strike={[3]} /></td><td className="muted">raw OCR</td></tr>
-                  <tr className="key"><td className="qty">4</td><td>Correct</td><td className="fix-in"><Chars reading={sample} /></td><td className="mag">+{gain.toFixed(1)} pts on the test set</td></tr>
+                  <tr className="key"><td className="qty">4</td><td>Correct</td><td className="fix-in"><Chars reading={sample} /></td><td className="mag">+{gain.toFixed(1)} pts, test set</td></tr>
                   <tr className="held"><td className="qty">5</td><td>Vote</td><td><span className="held-back legend">held back</span></td><td>training</td></tr>
                 </tbody>
               </table>
@@ -84,7 +80,11 @@ export default function Home() {
           </div>
         </section>
 
-        <Pipeline detectionRecall={site.baseline.detection_recall} gain={gain} sample={sample} />
+        <Pipeline sample={sample} s={{
+          detectionRecall: site.baseline.detection_recall, finetunedRecall: site.baseline.finetuned_recall, detect: site.detect,
+          baselineExact: baseline.exact, correctedExact: corrected.exact,
+          validLabels: a.labelled_images - a.bad_labels, parityStrings: 4000,
+        }} />
 
         <section className="chapter" id="traps" aria-labelledby="h-traps">
           <div className="chapter-head">
@@ -129,14 +129,14 @@ export default function Home() {
                 <li><strong>Look-alikes</strong><span>A swap costs 1.5, an unusual shape up to 2. The cheapest valid reading wins, so a real plate is never rewritten into a likelier one.</span><span className="chars">0↔O 8↔B 4↔A</span></li>
               </ol>
               <div className="table-wrap" style={{ marginTop: 36 }}>
-                <table className="table">
+                <table className="table records">
                   <thead><tr><th>Raw OCR</th><th>Read as</th><th>Why</th></tr></thead>
                   <tbody>
                     {site.corrector.map((c) => (
                       <tr key={c.raw}>
-                        <td><Chars raw={c.raw} strike={c.changed} /></td>
-                        <td><Chars reading={correct(c.raw)!} /></td>
-                        <td className="muted">{WHY[c.raw]}</td>
+                        <td data-l="Raw OCR"><Chars raw={c.raw} strike={c.changed} /></td>
+                        <td data-l="Read as"><Chars reading={correct(c.raw)!} /></td>
+                        <td data-l="Why" className="muted">{WHY[c.raw]}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -169,33 +169,33 @@ export default function Home() {
             <p>Exact match: the whole plate right, every character. Each row is one change, measured on the same {a.test_images} held-out images. Rows still training are held back, not estimated.</p>
           </div>
           <div className="table-wrap">
-            <table className="table">
+            <table className="table records">
               <thead><tr><th>Step</th><th>Configuration</th><th>Exact match</th><th>95% range</th><th>Character errors</th><th>Δ vs step 1</th><th>Zone</th></tr></thead>
               <tbody>
                 {site.baseline.rows.map((r, i) => (
                   <tr key={r.name} className={i === 1 ? "key" : undefined}>
-                    <td className="qty">{i + 1}</td>
-                    <td>{r.name}</td>
-                    <td className="qty">{pct(r.exact)}</td>
-                    <td className="qty">{pct(r.ci[0])} – {pct(r.ci[1])}</td>
-                    <td className="qty">{r.cer.toFixed(2)}</td>
-                    <td className={`qty${i ? " mag" : ""}`}>{i ? `+${((r.exact - baseline.exact) * 100).toFixed(1)} pts` : "—"}</td>
-                    <td><span className="zone-cell" style={{ background: `var(--z${Math.round(r.exact * 10)})` }} /></td>
+                    <td data-l="Step" className="qty">{i + 1}</td>
+                    <td data-l="Configuration">{r.name}</td>
+                    <td data-l="Exact match" className="qty">{pct(r.exact)}</td>
+                    <td data-l="95% range" className="qty">{pct(r.ci[0])} – {pct(r.ci[1])}</td>
+                    <td data-l="Character errors" className="qty">{r.cer.toFixed(2)}</td>
+                    <td data-l="Δ vs step 1" className={`qty${i === 1 ? " mag" : ""}`}>{i ? `${r.exact >= baseline.exact ? "+" : "−"}${Math.abs((r.exact - baseline.exact) * 100).toFixed(1)} pts` : "—"}</td>
+                    <td data-l="Zone"><span className="zone-cell" style={{ background: `var(--z${Math.round(r.exact * 10)})` }} /></td>
                   </tr>
                 ))}
                 {site.pending.map((p, i) => (
                   <tr key={p} className="held">
-                    <td className="qty">{site.baseline.rows.length + i + 1}</td>
-                    <td>{p}</td>
-                    <td colSpan={4}><span className="held-back legend">held back · training on Kaggle</span></td>
-                    <td><span className="zone-cell" style={{ borderStyle: "dashed" }} /></td>
+                    <td data-l="Step" className="qty">{site.baseline.rows.length + i + 1}</td>
+                    <td data-l="Configuration">{p}</td>
+                    <td data-l="Result" colSpan={4}><span className="held-back legend">held back · training on Kaggle</span></td>
+                    <td data-l="Zone"><span className="zone-cell" style={{ borderStyle: "dashed" }} /></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <div className="prose" style={{ marginTop: 32 }}>
-            <p className="muted">The test photos come from used-car listings, Google Images and video frames: mostly close-up and easier than live traffic, which is what the scanner below is for. I looked at test failures once, after the baseline; every tuning decision since then is checked on the training split. The old detector already finds {pct(site.baseline.detection_recall)} of test plates, so reading, not finding, is the problem to solve.</p>
+            <p className="muted">The test photos come from used-car listings, Google Images and video frames: mostly close-up and easier than live traffic, which is what the scanner below is for. I looked at test failures once, after the baseline; every tuning decision since then is checked on the training split. Fine-tuning the detector took plate finding from {pct(site.baseline.detection_recall)} to {pct(site.baseline.finetuned_recall)}, yet EasyOCR read its tighter crops no better: reading, not finding, is the problem to solve.</p>
           </div>
         </section>
 
