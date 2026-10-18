@@ -113,7 +113,7 @@ export default function Home() {
             {site.baseline.rows.map((r, i) => (
               <div key={r.name} className="receipt-row" role="row">
                 <p><span role="cell">{r.name}</span><span role="cell">{pct(r.exact)}</span><span role="cell">{r.cer.toFixed(2)}</span></p>
-                <p className="sub">95% range {pct(r.ci[0])} – {pct(r.ci[1])}{i === 1 && <b className="amb-ink"> · +{gain.toFixed(1)} pts from plate rules</b>}</p>
+                <p className="sub">95% range {pct(r.ci[0])} – {pct(r.ci[1])}{i === 1 && <b> · +{gain.toFixed(1)} pts from plate rules</b>}</p>
               </div>
             ))}
             {site.pending.map((p) => (

@@ -1,485 +1,747 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-18T00:00:00Z",
+  "generatedAt": "2026-10-18T09:00:48+00:00",
   "title": "Design System: Indian ANPR",
   "extensions": {
     "colorMeta": {
-      "zone-0": {
+      "canopy-yellow": {
+        "role": "primary",
+        "displayName": "Canopy Yellow",
+        "canonical": "#ffc20e",
+        "tonalRamp": [
+          "#4c3900",
+          "#876500",
+          "#c19000",
+          "#fbbc00",
+          "#ffcc37",
+          "#ffdb71",
+          "#ffeaab",
+          "#fff9e6"
+        ]
+      },
+      "asphalt": {
         "role": "neutral",
-        "displayName": "Zone 0, Developer Black",
+        "displayName": "Asphalt",
+        "canonical": "#202327",
+        "tonalRamp": [
+          "#22262a",
+          "#3d424a",
+          "#575f6a",
+          "#717c8a",
+          "#9199a5",
+          "#b1b7bf",
+          "#d1d5d9",
+          "#f1f2f4"
+        ]
+      },
+      "asphalt-booth": {
+        "role": "neutral",
+        "displayName": "Booth Asphalt",
+        "canonical": "#2b2f34",
+        "tonalRamp": [
+          "#23262a",
+          "#3d434a",
+          "#57606a",
+          "#727c8a",
+          "#919aa4",
+          "#b1b7bf",
+          "#d1d5d9",
+          "#f1f2f3"
+        ]
+      },
+      "asphalt-kerb": {
+        "role": "neutral",
+        "displayName": "Kerb Grey",
+        "canonical": "#393e45",
+        "tonalRamp": [
+          "#23262a",
+          "#3d424a",
+          "#575f6a",
+          "#727c8a",
+          "#9199a4",
+          "#b1b7bf",
+          "#d1d4d9",
+          "#f1f2f3"
+        ]
+      },
+      "lane-paint": {
+        "role": "neutral",
+        "displayName": "Lane Paint",
+        "canonical": "#f2f1ea",
+        "tonalRamp": [
+          "#2f2d1d",
+          "#534f34",
+          "#77724a",
+          "#9b9460",
+          "#b2ac83",
+          "#c9c4a7",
+          "#dfddcb",
+          "#f5f5ef"
+        ]
+      },
+      "lane-paint-dim": {
+        "role": "neutral",
+        "displayName": "Faded Paint",
+        "canonical": "#b9bcc0",
+        "tonalRamp": [
+          "#242628",
+          "#404347",
+          "#5b6066",
+          "#777d84",
+          "#969aa0",
+          "#b4b7bc",
+          "#d3d5d7",
+          "#f2f2f3"
+        ]
+      },
+      "concrete": {
+        "role": "neutral",
+        "displayName": "Concrete",
+        "canonical": "#e4e1d9",
+        "tonalRamp": [
+          "#2d2920",
+          "#4f4938",
+          "#716850",
+          "#938768",
+          "#aca38a",
+          "#c4bdac",
+          "#dcd8ce",
+          "#f4f3f0"
+        ]
+      },
+      "concrete-shade": {
+        "role": "neutral",
+        "displayName": "Concrete Shade",
+        "canonical": "#d3cfc5",
+        "tonalRamp": [
+          "#2b2821",
+          "#4d473a",
+          "#6e6653",
+          "#8f856c",
+          "#a9a18d",
+          "#c2bcae",
+          "#dbd8cf",
+          "#f4f3f0"
+        ]
+      },
+      "signage-ink": {
+        "role": "neutral",
+        "displayName": "Signage Ink",
+        "canonical": "#17181a",
+        "tonalRamp": [
+          "#242529",
+          "#3f4248",
+          "#5b5f66",
+          "#767b85",
+          "#9599a1",
+          "#b4b7bc",
+          "#d3d4d8",
+          "#f1f2f3"
+        ]
+      },
+      "signage-ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "#4a4d52",
+        "tonalRamp": [
+          "#242628",
+          "#404347",
+          "#5c5f65",
+          "#777c84",
+          "#969aa0",
+          "#b4b7bc",
+          "#d3d5d7",
+          "#f2f2f3"
+        ]
+      },
+      "signal-go": {
+        "role": "secondary",
+        "displayName": "Signal Go",
+        "canonical": "#2bd46a",
+        "tonalRamp": [
+          "#0d4020",
+          "#177038",
+          "#21a150",
+          "#2ad168",
+          "#58dd8a",
+          "#89e7ac",
+          "#b9f1ce",
+          "#eafbf0"
+        ]
+      },
+      "signal-go-ink": {
+        "role": "secondary",
+        "displayName": "Signal Go Ink",
+        "canonical": "#11692f",
+        "tonalRamp": [
+          "#0b421d",
+          "#137434",
+          "#1ba64a",
+          "#23d861",
+          "#53e384",
+          "#85eba8",
+          "#b7f3cb",
+          "#e9fbef"
+        ]
+      },
+      "signal-stop": {
+        "role": "secondary",
+        "displayName": "Signal Stop",
+        "canonical": "#ff3b30",
+        "tonalRamp": [
+          "#4c0400",
+          "#870700",
+          "#c10a00",
+          "#fb0d00",
+          "#ff4137",
+          "#ff7871",
+          "#ffb0ab",
+          "#ffe7e6"
+        ]
+      },
+      "signal-unlit": {
+        "role": "secondary",
+        "displayName": "Unlit Signal",
+        "canonical": "#3a3f45",
+        "tonalRamp": [
+          "#23262a",
+          "#3e4349",
+          "#586069",
+          "#737d89",
+          "#929aa3",
+          "#b2b7be",
+          "#d1d5d9",
+          "#f1f2f3"
+        ]
+      },
+      "correction-amber": {
+        "role": "tertiary",
+        "displayName": "Correction Amber",
+        "canonical": "#ffb000",
+        "tonalRamp": [
+          "#4c3500",
+          "#875d00",
+          "#c18500",
+          "#fbad00",
+          "#ffc137",
+          "#ffd371",
+          "#ffe5ab",
+          "#fff7e6"
+        ]
+      },
+      "correction-amber-ink": {
+        "role": "tertiary",
+        "displayName": "Correction Amber Ink",
+        "canonical": "#8a5200",
+        "tonalRamp": [
+          "#4c2d00",
+          "#875000",
+          "#c17300",
+          "#fb9500",
+          "#ffae37",
+          "#ffc571",
+          "#ffddab",
+          "#fff5e6"
+        ]
+      },
+      "led-dot": {
+        "role": "neutral",
+        "displayName": "LED Dot",
+        "canonical": "#dbe9ff",
+        "tonalRamp": [
+          "#001e4c",
+          "#003487",
+          "#004bc1",
+          "#0062fb",
+          "#3785ff",
+          "#71a8ff",
+          "#abccff",
+          "#e6efff"
+        ]
+      },
+      "led-glass": {
+        "role": "neutral",
+        "displayName": "LED Glass",
+        "canonical": "#0d0f12",
+        "tonalRamp": [
+          "#20252c",
+          "#39414e",
+          "#515d70",
+          "#697a92",
+          "#8b98ab",
+          "#adb6c3",
+          "#ced4dc",
+          "#f0f2f4"
+        ]
+      },
+      "thermal-paper": {
+        "role": "neutral",
+        "displayName": "Thermal Paper",
+        "canonical": "#faf7f0",
+        "tonalRamp": [
+          "#392e13",
+          "#655122",
+          "#917430",
+          "#bd973f",
+          "#cdaf69",
+          "#dbc694",
+          "#eaddc0",
+          "#f9f5ec"
+        ]
+      },
+      "thermal-ink": {
+        "role": "neutral",
+        "displayName": "Thermal Ink",
+        "canonical": "#34465a",
+        "tonalRamp": [
+          "#1c2630",
+          "#314255",
+          "#475f7a",
+          "#5c7c9f",
+          "#8099b6",
+          "#a5b7cb",
+          "#cad5e0",
+          "#eff2f6"
+        ]
+      },
+      "exit-green": {
+        "role": "tertiary",
+        "displayName": "Exit Green",
+        "canonical": "#0a6b3b",
+        "tonalRamp": [
+          "#074627",
+          "#0c7b44",
+          "#11b161",
+          "#15e67f",
+          "#48ee9c",
+          "#7df3b9",
+          "#b2f8d5",
+          "#e8fdf2"
+        ]
+      },
+      "plate-white": {
+        "role": "neutral",
+        "displayName": "Plate White",
+        "canonical": "#f5f5f1",
+        "tonalRamp": [
+          "#2d2d20",
+          "#4f4f38",
+          "#717150",
+          "#939369",
+          "#acac8a",
+          "#c4c4ac",
+          "#dcdcce",
+          "#f4f4f0"
+        ]
+      },
+      "plate-black": {
+        "role": "neutral",
+        "displayName": "Plate Black",
         "canonical": "#121212",
         "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
+          "#262626",
+          "#434343",
+          "#616161",
+          "#7e7e7e",
+          "#9b9b9b",
+          "#b8b8b8",
+          "#d5d5d5",
+          "#f2f2f2"
         ]
       },
-      "zone-1": {
+      "plate-commercial-yellow": {
         "role": "neutral",
-        "displayName": "Zone I",
-        "canonical": "#1d1c1b",
+        "displayName": "Commercial Plate Yellow",
+        "canonical": "#ffcd2a",
         "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
+          "#4c3b00",
+          "#876700",
+          "#c19400",
+          "#fbc000",
+          "#ffd037",
+          "#ffde71",
+          "#ffebab",
+          "#fff9e6"
         ]
       },
-      "zone-2": {
+      "plate-ev-green": {
         "role": "neutral",
-        "displayName": "Zone II",
-        "canonical": "#2b2a28",
+        "displayName": "EV Plate Green",
+        "canonical": "#1d7a3c",
         "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
+          "#0f3e1e",
+          "#1a6d36",
+          "#259c4d",
+          "#30cb64",
+          "#5dd986",
+          "#8ce4a9",
+          "#bbefcd",
+          "#eafaf0"
         ]
       },
-      "zone-3": {
+      "plate-ind-blue": {
         "role": "neutral",
-        "displayName": "Zone III",
-        "canonical": "#3b3a37",
+        "displayName": "IND Strip Blue",
+        "canonical": "#1f4ea6",
         "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
-        ]
-      },
-      "zone-4": {
-        "role": "neutral",
-        "displayName": "Zone IV",
-        "canonical": "#4f4d49",
-        "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
-        ]
-      },
-      "zone-5": {
-        "role": "neutral",
-        "displayName": "Zone V",
-        "canonical": "#67655f",
-        "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
-        ]
-      },
-      "zone-6": {
-        "role": "neutral",
-        "displayName": "Zone VI",
-        "canonical": "#817e78",
-        "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
-        ]
-      },
-      "zone-7": {
-        "role": "neutral",
-        "displayName": "Zone VII",
-        "canonical": "#9d9a93",
-        "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
-        ]
-      },
-      "zone-8": {
-        "role": "neutral",
-        "displayName": "Zone VIII",
-        "canonical": "#bab7b0",
-        "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
-        ]
-      },
-      "zone-9": {
-        "role": "neutral",
-        "displayName": "Zone IX",
-        "canonical": "#d6d3cc",
-        "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
-        ]
-      },
-      "zone-10": {
-        "role": "neutral",
-        "displayName": "Zone X, Cleared Light",
-        "canonical": "#f4f2ee",
-        "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
-        ]
-      },
-      "backlit-paper": {
-        "role": "neutral",
-        "displayName": "Backlit Paper",
-        "canonical": "#ebe8e2",
-        "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
-        ]
-      },
-      "record-sheet": {
-        "role": "neutral",
-        "displayName": "Record Sheet (Zone X at 95%)",
-        "canonical": "#f4f2eef2",
-        "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
-        ]
-      },
-      "stage-sheet": {
-        "role": "neutral",
-        "displayName": "Stage Sheet (Zone X at 85%)",
-        "canonical": "#f4f2eed9",
-        "tonalRamp": [
-          "#121212",
-          "#1d1c1b",
-          "#3b3a37",
-          "#4f4d49",
-          "#817e78",
-          "#bab7b0",
-          "#d6d3cc",
-          "#f4f2ee"
-        ]
-      },
-      "filtration-magenta": {
-        "role": "primary",
-        "displayName": "Filtration Magenta",
-        "canonical": "#e0218a",
-        "tonalRamp": [
-          "#3d0425",
-          "#66073f",
-          "#8f0b57",
-          "#ad0f68",
-          "#e0218a",
-          "#ea5ba6",
-          "#f39cc9",
-          "#fbdcec"
-        ]
-      },
-      "filtration-magenta-ink": {
-        "role": "primary",
-        "displayName": "Filtration Magenta Ink",
-        "canonical": "#ad0f68",
-        "tonalRamp": [
-          "#3d0425",
-          "#66073f",
-          "#8f0b57",
-          "#ad0f68",
-          "#e0218a",
-          "#ea5ba6",
-          "#f39cc9",
-          "#fbdcec"
+          "#0c1e40",
+          "#153572",
+          "#1e4ca3",
+          "#2864d4",
+          "#5686df",
+          "#87a9e9",
+          "#b8ccf2",
+          "#eaf0fb"
         ]
       }
     },
     "typographyMeta": {
       "display": {
-        "displayName": "Display",
-        "purpose": "Hero headline only, League Gothic caps."
+        "displayName": "Fascia Display",
+        "purpose": "Canopy fascia headline only."
       },
       "headline": {
-        "displayName": "Headline",
-        "purpose": "Chapter, stage and close headings."
+        "displayName": "Chapter Sign",
+        "purpose": "Chapter titles."
       },
       "title": {
-        "displayName": "Title",
-        "purpose": "Sheet headers, plate part values, trap figures, state codes, wordmark."
+        "displayName": "Station Sign",
+        "purpose": "Journey station headings, scanner idle prompt."
       },
       "body": {
-        "displayName": "Body",
-        "purpose": "Archivo prose on cleared light zones, max 66ch."
+        "displayName": "Narrator",
+        "purpose": "Prose on concrete and asphalt."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Chapter introductions, max 62ch."
       },
       "label": {
-        "displayName": "Legend",
-        "purpose": "Tracked condensed mono labels, captions, provenance, nav."
-      },
-      "quantity": {
-        "displayName": "Quantity",
-        "purpose": "Every number in a record; tabular."
-      },
-      "plate-chars": {
-        "displayName": "Plate characters",
-        "purpose": "Readings and raw OCR strings."
-      },
-      "table-head": {
-        "displayName": "Table head",
-        "purpose": "Ruled record column headers."
+        "displayName": "Panel Label",
+        "purpose": "Uppercase labels inside hardware panels; never above a headline."
       },
       "button": {
-        "displayName": "Button",
-        "purpose": "Button and link legends."
+        "displayName": "Control Caps",
+        "purpose": "Buttons and controls."
+      },
+      "led": {
+        "displayName": "Booth LED",
+        "purpose": "Plate readings and booth messages; flip-in glyphs."
+      },
+      "receipt": {
+        "displayName": "Thermal Print",
+        "purpose": "Receipts, slips, ledger, log, captions, inline readings."
+      },
+      "plate": {
+        "displayName": "Plate Registration",
+        "purpose": "Characters on drawn plates; container-relative."
       }
     },
     "shadows": [
       {
-        "name": "sheet",
-        "value": "0 1px 1px #12121214, 0 18px 40px -12px #12121238",
-        "purpose": "Translucent sheets and photographic prints only."
+        "name": "housing-recess",
+        "value": "inset 0 0 0 2px #000",
+        "purpose": "Signals, LED, booth panels, scanner housing."
+      },
+      {
+        "name": "led-vignette",
+        "value": "inset 0 0 0 2px #000, inset 0 0 24px #000",
+        "purpose": "Dot-matrix display face."
+      },
+      {
+        "name": "signal-glow-go",
+        "value": "drop-shadow(0 0 4px #2bd46a99)",
+        "purpose": "Lit green arrow (filter)."
+      },
+      {
+        "name": "signal-glow-stop",
+        "value": "drop-shadow(0 0 4px #ff3b3099)",
+        "purpose": "Lit red cross (filter)."
+      },
+      {
+        "name": "led-glow",
+        "value": "0 0 8px #dbe9ff88",
+        "purpose": "LED text (text-shadow)."
+      },
+      {
+        "name": "led-glow-corrected",
+        "value": "0 0 10px #ffb000cc, 0 0 2px #ffb000",
+        "purpose": "Corrected LED characters (text-shadow)."
+      },
+      {
+        "name": "lock-confirmed",
+        "value": "0 0 16px #2bd46a66",
+        "purpose": "Solid green plate lock once confirmed."
+      },
+      {
+        "name": "paper-drop",
+        "value": "0 24px 40px -24px #00000080",
+        "purpose": "Big receipt."
+      },
+      {
+        "name": "slip-drop",
+        "value": "0 10px 20px -10px #000",
+        "purpose": "Booth slip."
+      },
+      {
+        "name": "booth-edge",
+        "value": "-20px 0 40px -20px #000",
+        "purpose": "Booth standing over the lane."
+      },
+      {
+        "name": "button-lift",
+        "value": "0 8px 18px -8px #00000066",
+        "purpose": "Button hover with translateY(-2px)."
       }
     ],
     "materials": [
       {
-        "name": "hatch-sheet",
-        "value": "repeating-linear-gradient(45deg, #3b3a37 0 1px, transparent 1px 8px)",
-        "meaning": "Stage sheet (material legend); also the disabled-button field."
+        "name": "hazard-stripe",
+        "value": "repeating-linear-gradient(-45deg, #17181a 0 16px, #ffc20e 16px 32px)",
+        "purpose": "Marks plaza structure: 16px band under the canopy, top of the exit, traffic island fill."
       },
       {
-        "name": "hatch-dense",
-        "value": "repeating-linear-gradient(45deg, #3b3a37 0 1px, transparent 1px 5px)",
-        "meaning": "Losing vote bars (lower share). Also shipped as texture on button arrow cells and nav marks: drift, not canonized."
+        "name": "boom-arm",
+        "value": "repeating-linear-gradient(90deg, #ff3b30 0 34px, #f5f5f1 34px 68px)",
+        "purpose": "Barrier arm, 2px ink edge, 8px radius; down = closed, rotate(-80deg) = accepted. Vertical 26px bands on closed lanes."
       },
       {
-        "name": "conflict",
-        "value": "repeating-linear-gradient(45deg, #3b3a37 0 1px, transparent 1px 6px), repeating-linear-gradient(-45deg, #3b3a37 0 1px, transparent 1px 6px)",
-        "meaning": "Conflict: data that disagrees with itself (leakage, bad labels)."
+        "name": "lane-paint",
+        "value": "inset 0 3px 0 #f2f1ea, inset 0 -3px 0 #f2f1ea",
+        "purpose": "Bounds every asphalt lane strip (4px on closed lanes)."
       },
       {
-        "name": "held-back",
-        "value": "1px dashed #67655f",
-        "meaning": "Pending result, shown and not estimated."
+        "name": "lane-centre",
+        "value": "#ffc20e dashes 22/26 (hero road), 36-40px dashes on strips",
+        "purpose": "Lane direction."
       },
       {
-        "name": "filtration",
-        "value": "repeating-linear-gradient(45deg, #e0218a 0 1px, transparent 1px 6px), #e0218a",
-        "meaning": "The filtration swatch: grammar correction only."
+        "name": "road-stud",
+        "value": "9x5px #ffb000, 3px radius, glow 0 0 8px #ffb000aa",
+        "purpose": "Lane hardware along the hero road edges."
       },
       {
-        "name": "plate-frame",
-        "value": "10px solid #121212",
-        "meaning": "Black frame around photographic plate prints (8px in the stack, 6px on mobile)."
+        "name": "thermal-paper",
+        "value": "#faf7f0 ground, #34465a ink, Fragment Mono, 1px dashed rules, zig-zag torn edges 14x10px",
+        "purpose": "Results and findings only; pending prints as pending."
+      },
+      {
+        "name": "led-glass",
+        "value": "#0d0f12 face, #dbe9ff dots, Doto ROND 100",
+        "purpose": "Every booth display, signal housing and the booth input."
+      }
+    ],
+    "lineWeights": [
+      {
+        "name": "structure",
+        "value": "2px solid #17181a"
+      },
+      {
+        "name": "lane-paint",
+        "value": "3-4px #f2f1ea"
+      },
+      {
+        "name": "plate-lock",
+        "value": "3px dashed #f2f1ea; solid #2bd46a when confirmed"
+      },
+      {
+        "name": "receipt-rule",
+        "value": "1px dashed"
+      },
+      {
+        "name": "signal-stroke",
+        "value": "3.4 round caps and joins"
       }
     ],
     "motion": [
       {
         "name": "ease",
         "value": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "State transitions: buttons 0.25s, stage index 0.4s, stage copy 0.5 to 0.6s, print develop 2.4s."
+        "purpose": "All UI transitions: 0.2s controls, 0.4-0.6s stations and copy."
       },
       {
-        "name": "settle",
-        "value": "cubic-bezier(0.3, 1.12, 0.5, 1)",
-        "purpose": "Sheets carrying mass: stack slide 0.9s, record lay 1.1s, correction stamp 0.7s, ledger drop 0.9s."
+        "name": "barrier",
+        "value": "0.9s cubic-bezier(0.3, 1.1, 0.5, 1)",
+        "purpose": "Boom arm rise with slight overshoot."
+      },
+      {
+        "name": "vehicle-exit",
+        "value": "0.9s cubic-bezier(0.5, 0, 0.75, 0)",
+        "purpose": "Vehicle drives through after acceptance."
+      },
+      {
+        "name": "vehicle-approach",
+        "value": "1.5s cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Vehicle rolls in from scale 0.28."
+      },
+      {
+        "name": "printer",
+        "value": "clip-path 1.6s steps(14)",
+        "purpose": "Booth slip print; the big receipt prints on a view() timeline."
+      },
+      {
+        "name": "led-flip",
+        "value": "4 random glyphs per character, 55ms per flip, 45ms stagger",
+        "purpose": "LED text change; amber applies once settled."
+      },
+      {
+        "name": "loops",
+        "value": "linear; centre flow 1.6s, traffic 38s / 46s reversed, paused on hover",
+        "purpose": "Ambient lane motion."
       },
       {
         "name": "reduced-motion",
-        "value": "none",
-        "purpose": "Under prefers-reduced-motion, sheets, stage copy and ledger rows are laid out with no transition; content is visible by default."
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Removes smooth scroll, centre flow, streams, approach, lock, ledger drop and journey copy animations; cuts arm, slip and vehicle transitions; the hero lane rests at its final state (barrier up, slip printed); LEDs show text without flipping; receipt scroll-print runs only under no-preference."
       }
     ],
     "breakpoints": [
       {
         "name": "narrow",
-        "value": "1100px"
+        "value": "1000px"
       },
       {
         "name": "phone",
         "value": "640px"
-      },
-      {
-        "name": "short-rail",
-        "value": "max-height 980px (primer hidden)"
       }
     ]
   },
   "components": [
     {
-      "name": "Primary Button",
+      "name": "Go Button",
       "kind": "button",
-      "refersTo": "button-primary",
-      "description": "The ink action: open the scanner, open the repo.",
-      "html": "<button class=\"ds-btn ds-btn-primary\"><span>Open the live scanner</span><span class=\"ds-tag\"><svg viewBox=\"0 0 18 12\" width=\"18\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M0 6h16M11 1l5 5-5 5\"/></svg></span></button>",
-      "css": ":host{--z0:#121212;--z2:#2b2a28;--z3:#3b3a37;--z4:#4f4d49;--z5:#67655f;--z8:#bab7b0;--z9:#d6d3cc;--z10:#f4f2ee;--paper:#ebe8e2;--ink:var(--z0);--ink-2:var(--z4);--rule:var(--z8);--rule-strong:var(--z3);--mag:#e0218a;--mag-ink:#ad0f68;--ease:cubic-bezier(0.16,1,0.3,1);--shadow-sheet:0 1px 1px #12121214,0 18px 40px -12px #12121238;--font-mono:'Martian Mono',monospace;--font-display:'League Gothic',sans-serif;--font-body:'Archivo',sans-serif;} .ds-btn{display:inline-flex;align-items:stretch;border:1px solid var(--ink);border-radius:0;font:500 0.8rem/1 var(--font-mono);font-stretch:80%;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;background:transparent;color:var(--ink);padding:0;transition:background 0.25s var(--ease),color 0.25s var(--ease);} .ds-btn>span{padding:16px 20px;display:flex;align-items:center;gap:12px;} .ds-btn>.ds-tag{border-left:1px solid currentColor;padding:16px 14px;} .ds-btn:hover{background:var(--z2);color:var(--z10);} .ds-btn:focus-visible{outline:2px solid var(--ink);outline-offset:3px;} .ds-btn:disabled{opacity:0.45;cursor:not-allowed;} .ds-btn-primary{background:var(--ink);color:var(--z10);}"
+      "refersTo": "button-go",
+      "description": "Primary action: ink button led by a green lane signal; inverts to canopy yellow on asphalt.",
+      "html": "<div class=\"ds-canopy\"><button class=\"ds-btn ds-btn-go\"><span class=\"ds-signal go\"><svg viewBox=\"0 0 24 24\"><path d=\"M12 3v15M5 11l7 8 7-8\"/></svg></span><span>Open your lane</span></button></div>",
+      "css": ":host{--canopy:#ffc20e;--ink:#17181a;--paint:#f2f1ea;--paint-2:#b9bcc0;--asphalt:#202327;--asphalt-2:#2b2f34;--asphalt-3:#393e45;--go:#2bd46a;--stop:#ff3b30;--amber:#ffb000;--amber-ink:#8a5200;--led:#dbe9ff;--led-bg:#0d0f12;--paper:#faf7f0;--thermal:#34465a;--ease:cubic-bezier(0.16,1,0.3,1);--hazard:repeating-linear-gradient(-45deg,#17181a 0 16px,#ffc20e 16px 32px);} .ds-signal{display:inline-grid;place-items:center;width:26px;height:26px;background:var(--led-bg);border-radius:5px;box-shadow:inset 0 0 0 2px #000} .ds-signal svg{width:18px;height:18px;fill:none;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round} .ds-signal.go svg{stroke:var(--go);filter:drop-shadow(0 0 4px #2bd46a99)} .ds-signal.stop svg{stroke:var(--stop);filter:drop-shadow(0 0 4px #ff3b3099)} .ds-signal.off svg{stroke:none;fill:#3a3f45} .ds-btn{display:inline-flex;align-items:center;gap:12px;padding:13px 20px;border:2px solid var(--ink);border-radius:8px;background:transparent;color:inherit;cursor:pointer;font:800 1.02rem/1 'Big Shoulders',sans-serif;letter-spacing:0.08em;text-transform:uppercase;transition:transform .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease)} .ds-btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px -8px #00000066} .ds-btn:active{transform:translateY(1px)} .ds-btn:focus-visible{outline:3px solid var(--canopy);outline-offset:3px} .ds-canopy{background:var(--canopy);padding:20px} .ds-btn-go{background:var(--ink);color:var(--paint);padding-left:10px} .ds-btn-go:hover{background:#000}"
     },
     {
-      "name": "Secondary Button",
+      "name": "Ghost Button",
       "kind": "button",
-      "refersTo": "button-secondary",
-      "description": "Ruled outline action beside a primary (open a photo, stop).",
-      "html": "<button class=\"ds-btn\"><span>Open a photo</span><span class=\"ds-tag\"><svg viewBox=\"0 0 18 12\" width=\"18\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M0 6h16M11 1l5 5-5 5\"/></svg></span></button>",
-      "css": ":host{--z0:#121212;--z2:#2b2a28;--z3:#3b3a37;--z4:#4f4d49;--z5:#67655f;--z8:#bab7b0;--z9:#d6d3cc;--z10:#f4f2ee;--paper:#ebe8e2;--ink:var(--z0);--ink-2:var(--z4);--rule:var(--z8);--rule-strong:var(--z3);--mag:#e0218a;--mag-ink:#ad0f68;--ease:cubic-bezier(0.16,1,0.3,1);--shadow-sheet:0 1px 1px #12121214,0 18px 40px -12px #12121238;--font-mono:'Martian Mono',monospace;--font-display:'League Gothic',sans-serif;--font-body:'Archivo',sans-serif;} .ds-btn{display:inline-flex;align-items:stretch;border:1px solid var(--ink);border-radius:0;font:500 0.8rem/1 var(--font-mono);font-stretch:80%;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;background:transparent;color:var(--ink);padding:0;transition:background 0.25s var(--ease),color 0.25s var(--ease);} .ds-btn>span{padding:16px 20px;display:flex;align-items:center;gap:12px;} .ds-btn>.ds-tag{border-left:1px solid currentColor;padding:16px 14px;} .ds-btn:hover{background:var(--z2);color:var(--z10);} .ds-btn:focus-visible{outline:2px solid var(--ink);outline-offset:3px;} .ds-btn:disabled{opacity:0.45;cursor:not-allowed;}"
+      "refersTo": "button-ghost",
+      "description": "Secondary action on asphalt, e.g. Send the next vehicle.",
+      "html": "<div class=\"ds-asphalt\"><button class=\"ds-btn ds-btn-ghost\">Send the next vehicle</button></div>",
+      "css": ":host{--canopy:#ffc20e;--ink:#17181a;--paint:#f2f1ea;--paint-2:#b9bcc0;--asphalt:#202327;--asphalt-2:#2b2f34;--asphalt-3:#393e45;--go:#2bd46a;--stop:#ff3b30;--amber:#ffb000;--amber-ink:#8a5200;--led:#dbe9ff;--led-bg:#0d0f12;--paper:#faf7f0;--thermal:#34465a;--ease:cubic-bezier(0.16,1,0.3,1);--hazard:repeating-linear-gradient(-45deg,#17181a 0 16px,#ffc20e 16px 32px);} .ds-btn{display:inline-flex;align-items:center;gap:12px;padding:13px 20px;border:2px solid var(--ink);border-radius:8px;background:transparent;color:inherit;cursor:pointer;font:800 1.02rem/1 'Big Shoulders',sans-serif;letter-spacing:0.08em;text-transform:uppercase;transition:transform .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease)} .ds-btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px -8px #00000066} .ds-btn:active{transform:translateY(1px)} .ds-btn:focus-visible{outline:3px solid var(--canopy);outline-offset:3px} .ds-asphalt{background:var(--asphalt-2);padding:20px} .ds-btn-ghost{border-color:currentColor;color:var(--paint)}"
     },
     {
-      "name": "Chapter Navigation",
+      "name": "Lane Signal",
+      "kind": "custom",
+      "refersTo": "lane-signal",
+      "description": "The state system: green arrow open/confirmed, red cross closed/rejected, unlit dot not reached.",
+      "html": "<div style=\"display:flex;gap:10px\"><span class=\"ds-signal go\"><svg viewBox=\"0 0 24 24\"><path d=\"M12 3v15M5 11l7 8 7-8\"/></svg></span><span class=\"ds-signal stop\"><svg viewBox=\"0 0 24 24\"><path d=\"M5 5l14 14M19 5L5 19\"/></svg></span><span class=\"ds-signal off\"><svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"4\"/></svg></span></div>",
+      "css": ":host{--canopy:#ffc20e;--ink:#17181a;--paint:#f2f1ea;--paint-2:#b9bcc0;--asphalt:#202327;--asphalt-2:#2b2f34;--asphalt-3:#393e45;--go:#2bd46a;--stop:#ff3b30;--amber:#ffb000;--amber-ink:#8a5200;--led:#dbe9ff;--led-bg:#0d0f12;--paper:#faf7f0;--thermal:#34465a;--ease:cubic-bezier(0.16,1,0.3,1);--hazard:repeating-linear-gradient(-45deg,#17181a 0 16px,#ffc20e 16px 32px);} .ds-signal{display:inline-grid;place-items:center;width:26px;height:26px;background:var(--led-bg);border-radius:5px;box-shadow:inset 0 0 0 2px #000} .ds-signal svg{width:18px;height:18px;fill:none;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round} .ds-signal.go svg{stroke:var(--go);filter:drop-shadow(0 0 4px #2bd46a99)} .ds-signal.stop svg{stroke:var(--stop);filter:drop-shadow(0 0 4px #ff3b3099)} .ds-signal.off svg{stroke:none;fill:#3a3f45}"
+    },
+    {
+      "name": "Lane Nav",
       "kind": "nav",
-      "refersTo": "chapter-nav-active",
-      "description": "Rail chapter list; the current chapter inverts to ink.",
-      "html": "<ul class=\"ds-chapters\"><li><a href=\"#\" aria-current=\"true\"><span class=\"ds-mark\"></span>The record</a></li><li><a href=\"#\"><span class=\"ds-mark\"></span>How a plate is read</a></li><li><a href=\"#\"><span class=\"ds-mark\"></span>Results</a></li></ul>",
-      "css": ":host{--z0:#121212;--z2:#2b2a28;--z3:#3b3a37;--z4:#4f4d49;--z5:#67655f;--z8:#bab7b0;--z9:#d6d3cc;--z10:#f4f2ee;--paper:#ebe8e2;--ink:var(--z0);--ink-2:var(--z4);--rule:var(--z8);--rule-strong:var(--z3);--mag:#e0218a;--mag-ink:#ad0f68;--ease:cubic-bezier(0.16,1,0.3,1);--shadow-sheet:0 1px 1px #12121214,0 18px 40px -12px #12121238;--font-mono:'Martian Mono',monospace;--font-display:'League Gothic',sans-serif;--font-body:'Archivo',sans-serif;} .ds-chapters{list-style:none;margin:0;padding:0;width:240px;border-top:1px solid var(--rule);font:400 0.72rem/1.4 var(--font-mono);font-stretch:78%;letter-spacing:0.16em;text-transform:uppercase;} .ds-chapters a{display:grid;grid-template-columns:22px 1fr;padding:5px 4px;border-bottom:1px solid var(--rule);text-decoration:none;color:var(--ink);} .ds-chapters a:hover{background:var(--z10);} .ds-chapters a:focus-visible{outline:2px solid var(--ink);outline-offset:3px;} .ds-chapters a[aria-current=true]{background:var(--ink);color:var(--z10);} .ds-mark{width:9px;height:9px;border:1px solid currentColor;align-self:center;} .ds-chapters a[aria-current=true] .ds-mark{background:currentColor;}"
+      "refersTo": "lane-nav-item",
+      "description": "Chapters as numbered lanes in the canopy; the traps chapter shows a closed signal.",
+      "html": "<nav class=\"ds-canopy\"><a class=\"ds-lane\" href=\"#\"><span class=\"ds-no\">01</span><span class=\"ds-signal go sm\"><svg viewBox=\"0 0 24 24\"><path d=\"M12 3v15M5 11l7 8 7-8\"/></svg></span>How it reads</a><a class=\"ds-lane\" href=\"#\"><span class=\"ds-no\">02</span><span class=\"ds-signal stop sm\"><svg viewBox=\"0 0 24 24\"><path d=\"M5 5l14 14M19 5L5 19\"/></svg></span>Closed lanes</a></nav>",
+      "css": ":host{--canopy:#ffc20e;--ink:#17181a;--paint:#f2f1ea;--paint-2:#b9bcc0;--asphalt:#202327;--asphalt-2:#2b2f34;--asphalt-3:#393e45;--go:#2bd46a;--stop:#ff3b30;--amber:#ffb000;--amber-ink:#8a5200;--led:#dbe9ff;--led-bg:#0d0f12;--paper:#faf7f0;--thermal:#34465a;--ease:cubic-bezier(0.16,1,0.3,1);--hazard:repeating-linear-gradient(-45deg,#17181a 0 16px,#ffc20e 16px 32px);} .ds-signal{display:inline-grid;place-items:center;width:26px;height:26px;background:var(--led-bg);border-radius:5px;box-shadow:inset 0 0 0 2px #000} .ds-signal svg{width:18px;height:18px;fill:none;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round} .ds-signal.go svg{stroke:var(--go);filter:drop-shadow(0 0 4px #2bd46a99)} .ds-signal.stop svg{stroke:var(--stop);filter:drop-shadow(0 0 4px #ff3b3099)} .ds-signal.off svg{stroke:none;fill:#3a3f45} .ds-canopy{display:flex;gap:8px;background:var(--canopy);padding:12px} .ds-lane{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;background:var(--ink);color:var(--paint);border-radius:6px;text-decoration:none;font:700 .78rem/1 'Big Shoulders',sans-serif;letter-spacing:.1em;text-transform:uppercase;transition:background .2s var(--ease)} .ds-lane:hover{background:#000} .ds-lane:focus-visible{outline:3px solid var(--canopy);outline-offset:3px} .ds-no{font-family:Doto,monospace;font-weight:700;color:var(--canopy);font-size:.9rem;padding-left:4px} .ds-signal.sm{width:20px;height:20px;box-shadow:none} .ds-signal.sm svg{width:14px;height:14px}"
     },
     {
-      "name": "Strip Cell",
-      "kind": "card",
-      "refersTo": "strip-cell",
-      "description": "Ruled label-over-value cell of the top strip and scanner head.",
-      "html": "<div class=\"ds-strip\"><div><div class=\"ds-legend\">Test set</div><div class=\"ds-v\">431 img · 261 plates</div></div><div><div class=\"ds-legend\">Status</div><div class=\"ds-v\">reader training</div></div></div>",
-      "css": ":host{--z0:#121212;--z2:#2b2a28;--z3:#3b3a37;--z4:#4f4d49;--z5:#67655f;--z8:#bab7b0;--z9:#d6d3cc;--z10:#f4f2ee;--paper:#ebe8e2;--ink:var(--z0);--ink-2:var(--z4);--rule:var(--z8);--rule-strong:var(--z3);--mag:#e0218a;--mag-ink:#ad0f68;--ease:cubic-bezier(0.16,1,0.3,1);--shadow-sheet:0 1px 1px #12121214,0 18px 40px -12px #12121238;--font-mono:'Martian Mono',monospace;--font-display:'League Gothic',sans-serif;--font-body:'Archivo',sans-serif;} .ds-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-bottom:1px solid var(--rule-strong);background:var(--paper);color:var(--ink);} .ds-strip>div{padding:12px 16px;border-right:1px solid var(--rule);} .ds-strip>div:last-child{border-right:0;} .ds-legend{font:400 0.72rem/1.4 var(--font-mono);font-stretch:78%;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-2);} .ds-v{font-family:var(--font-mono);font-stretch:80%;font-size:0.8rem;margin-top:3px;}"
+      "name": "LED Booth Display",
+      "kind": "custom",
+      "refersTo": "led-display",
+      "description": "Dot-matrix reading; amber lights only the corrected characters.",
+      "html": "<span class=\"ds-led\">RJ 1<span class=\"amb\">4</span> CD 1234</span>",
+      "css": ":host{--canopy:#ffc20e;--ink:#17181a;--paint:#f2f1ea;--paint-2:#b9bcc0;--asphalt:#202327;--asphalt-2:#2b2f34;--asphalt-3:#393e45;--go:#2bd46a;--stop:#ff3b30;--amber:#ffb000;--amber-ink:#8a5200;--led:#dbe9ff;--led-bg:#0d0f12;--paper:#faf7f0;--thermal:#34465a;--ease:cubic-bezier(0.16,1,0.3,1);--hazard:repeating-linear-gradient(-45deg,#17181a 0 16px,#ffc20e 16px 32px);} .ds-led{display:inline-flex;padding:12px 14px;background:var(--led-bg);border-radius:6px;box-shadow:inset 0 0 0 2px #000,inset 0 0 24px #000;font:800 2rem/1 Doto,monospace;letter-spacing:.06em;color:var(--led);text-shadow:0 0 8px #dbe9ff88;font-variation-settings:'ROND' 100;white-space:pre} .ds-led .amb{color:var(--amber);text-shadow:0 0 10px #ffb000cc,0 0 2px #ffb000}"
     },
     {
-      "name": "Held-back Tag",
+      "name": "Booth Input",
+      "kind": "input",
+      "refersTo": "booth-input",
+      "description": "Type a misread plate into the booth; LED face, amber caret, canopy border on focus.",
+      "html": "<input class=\"ds-booth-input\" value=\"MB12AU4821\" aria-label=\"Misread plate\">",
+      "css": ":host{--canopy:#ffc20e;--ink:#17181a;--paint:#f2f1ea;--paint-2:#b9bcc0;--asphalt:#202327;--asphalt-2:#2b2f34;--asphalt-3:#393e45;--go:#2bd46a;--stop:#ff3b30;--amber:#ffb000;--amber-ink:#8a5200;--led:#dbe9ff;--led-bg:#0d0f12;--paper:#faf7f0;--thermal:#34465a;--ease:cubic-bezier(0.16,1,0.3,1);--hazard:repeating-linear-gradient(-45deg,#17181a 0 16px,#ffc20e 16px 32px);} .ds-booth-input{width:100%;padding:16px 18px;border:2px solid var(--asphalt-3);border-radius:8px;background:var(--led-bg);color:var(--led);caret-color:var(--amber);font:800 2rem/1 Doto,monospace;letter-spacing:.08em;text-transform:uppercase} .ds-booth-input:focus,.ds-booth-input:focus-visible{outline:none;border-color:var(--canopy)}"
+    },
+    {
+      "name": "Plate Chip",
       "kind": "chip",
-      "refersTo": "held-back-tag",
-      "description": "Dashed tag standing in for a result still training; never an estimate.",
-      "html": "<span class=\"ds-held\">held back · training on Kaggle</span>",
-      "css": ":host{--z0:#121212;--z2:#2b2a28;--z3:#3b3a37;--z4:#4f4d49;--z5:#67655f;--z8:#bab7b0;--z9:#d6d3cc;--z10:#f4f2ee;--paper:#ebe8e2;--ink:var(--z0);--ink-2:var(--z4);--rule:var(--z8);--rule-strong:var(--z3);--mag:#e0218a;--mag-ink:#ad0f68;--ease:cubic-bezier(0.16,1,0.3,1);--shadow-sheet:0 1px 1px #12121214,0 18px 40px -12px #12121238;--font-mono:'Martian Mono',monospace;--font-display:'League Gothic',sans-serif;--font-body:'Archivo',sans-serif;} .ds-held{display:inline-block;border:1px dashed var(--z5);padding:2px 8px;color:var(--ink-2);font:400 0.72rem/1.4 var(--font-mono);font-stretch:78%;letter-spacing:0.16em;text-transform:uppercase;}"
+      "refersTo": "plate-chip",
+      "description": "Example misreads as plate-white chips; selected gets a canopy ring.",
+      "html": "<div style=\"display:flex;gap:8px;background:#2b2f34;padding:16px\"><button class=\"ds-chip on\">RJ1ACD1234</button><button class=\"ds-chip\">228H1234A</button></div>",
+      "css": ":host{--canopy:#ffc20e;--ink:#17181a;--paint:#f2f1ea;--paint-2:#b9bcc0;--asphalt:#202327;--asphalt-2:#2b2f34;--asphalt-3:#393e45;--go:#2bd46a;--stop:#ff3b30;--amber:#ffb000;--amber-ink:#8a5200;--led:#dbe9ff;--led-bg:#0d0f12;--paper:#faf7f0;--thermal:#34465a;--ease:cubic-bezier(0.16,1,0.3,1);--hazard:repeating-linear-gradient(-45deg,#17181a 0 16px,#ffc20e 16px 32px);} .ds-chip{cursor:pointer;padding:7px 12px;border-radius:6px;border:2px solid var(--asphalt-3);background:#f5f5f1;color:#121212;font:800 .95rem/1 'Big Shoulders',sans-serif;letter-spacing:.06em;transition:transform .2s var(--ease)} .ds-chip:hover{transform:translateY(-2px)} .ds-chip:focus-visible{outline:3px solid var(--canopy);outline-offset:3px} .ds-chip.on{border-color:var(--canopy);box-shadow:0 0 0 2px var(--canopy)}"
     },
     {
-      "name": "Plate Characters",
+      "name": "Drawn Plate",
       "kind": "custom",
-      "description": "A raw read with the rejected character struck, then the corrected read; magenta only on what the grammar changed.",
-      "html": "<div class=\"ds-pair\"><span class=\"ds-chars\">RJ1<span class=\"ds-strike\">A</span>CD1234</span><span class=\"ds-chars\">RJ 1<span class=\"ds-fix\">4</span> CD 1234</span></div>",
-      "css": ":host{--z0:#121212;--z2:#2b2a28;--z3:#3b3a37;--z4:#4f4d49;--z5:#67655f;--z8:#bab7b0;--z9:#d6d3cc;--z10:#f4f2ee;--paper:#ebe8e2;--ink:var(--z0);--ink-2:var(--z4);--rule:var(--z8);--rule-strong:var(--z3);--mag:#e0218a;--mag-ink:#ad0f68;--ease:cubic-bezier(0.16,1,0.3,1);--shadow-sheet:0 1px 1px #12121214,0 18px 40px -12px #12121238;--font-mono:'Martian Mono',monospace;--font-display:'League Gothic',sans-serif;--font-body:'Archivo',sans-serif;} .ds-pair{display:grid;gap:10px;font-size:1.6rem;color:var(--ink);} .ds-chars{font-family:var(--font-mono);font-stretch:82%;letter-spacing:0.2em;white-space:nowrap;} .ds-fix{color:var(--mag-ink);text-decoration:underline 2px var(--mag);text-underline-offset:4px;font-weight:700;} .ds-strike{color:var(--mag-ink);text-decoration:line-through 2px var(--mag);}"
+      "refersTo": "plate",
+      "description": "Indian plate drawn in code: private, commercial, EV and Bharat series schemes with the IND strip.",
+      "html": "<span class=\"ds-plate \"><span class=\"ind\"><i></i>IND</span><span class=\"txt\">RJ 14 CD 1234</span></span><span class=\"ds-plate com\"><span class=\"ind\"><i></i>IND</span><span class=\"txt\">WB 12 AU 4821</span></span><span class=\"ds-plate ev\"><span class=\"ind\"><i></i>IND</span><span class=\"txt\">DL 3 CAB 1234</span></span><span class=\"ds-plate \"><span class=\"ind\"><i></i>IND</span><span class=\"txt\">22 BH 1234 A</span></span>",
+      "css": ".ds-plate{container-type:inline-size;display:flex;width:280px;margin:6px;aspect-ratio:4.4/1;background:#f5f5f1;color:#121212;border:2px solid #121212;border-radius:7%/26%;overflow:hidden;box-shadow:inset 0 0 0 2px #f5f5f1,inset 0 0 0 3px #12121255} .ds-plate.com{background:#ffcd2a;box-shadow:inset 0 0 0 2px #ffcd2a,inset 0 0 0 3px #12121255} .ds-plate.ev{background:#1d7a3c;color:#f5f5f1;box-shadow:inset 0 0 0 2px #1d7a3c,inset 0 0 0 3px #f5f5f155} .ds-plate .ind{flex:0 0 9%;background:#1f4ea6;color:#f5f5f1;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:6% 0 4%;font:700 4cqw/1 'Big Shoulders',sans-serif} .ds-plate .ind i{width:50%;aspect-ratio:1;border-radius:50%;border:1px solid #f5f5f1aa} .ds-plate .txt{flex:1;display:flex;align-items:center;justify-content:center;font:800 14.5cqw/.95 'Big Shoulders',sans-serif;letter-spacing:.02em;white-space:nowrap}"
     },
     {
-      "name": "Ruled Record Table",
-      "kind": "custom",
-      "description": "Step-numbered results with tabular quantities, a zone cell per row, and a held-back row.",
-      "html": "<table class=\"ds-table\"><thead><tr><th>Step</th><th>Configuration</th><th>Exact match</th><th>Zone</th></tr></thead><tbody><tr><td class=\"ds-q\">1</td><td>Old detector + EasyOCR</td><td class=\"ds-q\">18.8%</td><td><span class=\"ds-zone\" style=\"background:#2b2a28\"></span></td></tr><tr class=\"ds-heldrow\"><td class=\"ds-q\">4</td><td>Synthetic-trained reader</td><td><span class=\"ds-held\">held back</span></td><td><span class=\"ds-zone\" style=\"border-style:dashed\"></span></td></tr></tbody></table>",
-      "css": ":host{--z0:#121212;--z2:#2b2a28;--z3:#3b3a37;--z4:#4f4d49;--z5:#67655f;--z8:#bab7b0;--z9:#d6d3cc;--z10:#f4f2ee;--paper:#ebe8e2;--ink:var(--z0);--ink-2:var(--z4);--rule:var(--z8);--rule-strong:var(--z3);--mag:#e0218a;--mag-ink:#ad0f68;--ease:cubic-bezier(0.16,1,0.3,1);--shadow-sheet:0 1px 1px #12121214,0 18px 40px -12px #12121238;--font-mono:'Martian Mono',monospace;--font-display:'League Gothic',sans-serif;--font-body:'Archivo',sans-serif;} .ds-table{border-collapse:collapse;width:100%;color:var(--ink);font:400 0.9rem/1.6 var(--font-body);} .ds-table th{text-align:left;font:500 0.66rem/1.3 var(--font-mono);font-stretch:78%;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-2);padding:7px 8px;border-bottom:1px solid var(--rule-strong);} .ds-table td{padding:9px 8px;border-bottom:1px solid var(--rule);} .ds-q{font-family:var(--font-mono);font-stretch:82%;font-variant-numeric:tabular-nums;font-size:0.86rem;} .ds-heldrow td{background:var(--z10);color:var(--ink-2);} .ds-heldrow td:first-child{box-shadow:inset 2px 0 0 -1px #817e78;} .ds-zone{display:inline-block;width:38px;height:22px;border:1px solid var(--rule-strong);vertical-align:middle;} .ds-held{display:inline-block;border:1px dashed var(--z5);padding:2px 8px;font:400 0.72rem/1.4 var(--font-mono);font-stretch:78%;letter-spacing:0.16em;text-transform:uppercase;}"
-    },
-    {
-      "name": "Stage Sheet",
+      "name": "Thermal Receipt",
       "kind": "card",
-      "refersTo": "stage-sheet",
-      "description": "Translucent ruled sheet, one per pipeline stage, laid askew over the black-framed plate.",
-      "html": "<div class=\"ds-bench\"><div class=\"ds-print\"></div><div class=\"ds-sheet\"><header><span class=\"ds-title\">Correct</span><span class=\"ds-legend\">Stage 4 of 5</span></header><table><tr><td>+ plate grammar</td><td class=\"ds-q\">28.1%</td><td class=\"ds-m\">exact match</td></tr></table><div class=\"ds-legend\">Real output of the corrector</div></div></div>",
-      "css": ":host{--z0:#121212;--z2:#2b2a28;--z3:#3b3a37;--z4:#4f4d49;--z5:#67655f;--z8:#bab7b0;--z9:#d6d3cc;--z10:#f4f2ee;--paper:#ebe8e2;--ink:var(--z0);--ink-2:var(--z4);--rule:var(--z8);--rule-strong:var(--z3);--mag:#e0218a;--mag-ink:#ad0f68;--ease:cubic-bezier(0.16,1,0.3,1);--shadow-sheet:0 1px 1px #12121214,0 18px 40px -12px #12121238;--font-mono:'Martian Mono',monospace;--font-display:'League Gothic',sans-serif;--font-body:'Archivo',sans-serif;} .ds-bench{position:relative;width:420px;height:260px;background:var(--paper);padding:30px;} .ds-print{position:absolute;left:40%;top:16%;width:52%;height:46%;background:#67655f;border:8px solid var(--z0);transform:rotate(3deg);} .ds-sheet{position:relative;background:#f4f2eed9;backdrop-filter:blur(3px);border:1px solid var(--rule-strong);box-shadow:var(--shadow-sheet);padding:22px 24px;display:flex;flex-direction:column;gap:14px;transform:rotate(-1.6deg);transition:transform 0.9s cubic-bezier(0.3,1.12,0.5,1);color:var(--ink);} .ds-sheet:hover{transform:rotate(-0.6deg) translate(-4px,-6px);} .ds-sheet header{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--rule-strong);padding-bottom:10px;} .ds-title{font:400 2.6rem/0.86 var(--font-display);text-transform:uppercase;} .ds-legend{font:400 0.72rem/1.4 var(--font-mono);font-stretch:78%;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-2);} .ds-sheet table{border-collapse:collapse;width:100%;font:400 0.84rem/1.5 var(--font-body);} .ds-sheet td{padding:6px 8px;border-bottom:1px solid var(--rule);} .ds-q{font-family:var(--font-mono);font-stretch:82%;font-weight:600;} .ds-m{color:var(--ink-2);}"
+      "refersTo": "receipt",
+      "description": "Results printed on thermal paper; pending lines print as pending.",
+      "html": "<div class=\"ds-receipt\"><p class=\"t\">Indian ANPR · results</p><p class=\"row\"><span>Reader v2</span><b>pending</b></p><p class=\"row\"><span>Voting on video</span><b>pending</b></p></div>",
+      "css": ":host{--canopy:#ffc20e;--ink:#17181a;--paint:#f2f1ea;--paint-2:#b9bcc0;--asphalt:#202327;--asphalt-2:#2b2f34;--asphalt-3:#393e45;--go:#2bd46a;--stop:#ff3b30;--amber:#ffb000;--amber-ink:#8a5200;--led:#dbe9ff;--led-bg:#0d0f12;--paper:#faf7f0;--thermal:#34465a;--ease:cubic-bezier(0.16,1,0.3,1);--hazard:repeating-linear-gradient(-45deg,#17181a 0 16px,#ffc20e 16px 32px);} .ds-receipt{background:var(--paper);color:var(--thermal);font:400 .92rem/1.5 'Fragment Mono',monospace;padding:30px 26px;box-shadow:0 24px 40px -24px #00000080;transform:rotate(.8deg);max-width:360px} .ds-receipt p{margin:0} .ds-receipt .t{font:800 1.4rem/1.1 'Big Shoulders',sans-serif;text-transform:uppercase;color:var(--ink);text-align:center;margin-bottom:12px} .ds-receipt .row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed #34465a55} .ds-receipt b{font-weight:700;opacity:.7}"
+    },
+    {
+      "name": "Hazard Band",
+      "kind": "custom",
+      "refersTo": "hazard",
+      "description": "Plaza structure edge: under the canopy, top of the exit, traffic islands.",
+      "html": "<div class=\"ds-canopy-band\"></div><div class=\"ds-hazard\"></div>",
+      "css": ":host{--canopy:#ffc20e;--ink:#17181a;--paint:#f2f1ea;--paint-2:#b9bcc0;--asphalt:#202327;--asphalt-2:#2b2f34;--asphalt-3:#393e45;--go:#2bd46a;--stop:#ff3b30;--amber:#ffb000;--amber-ink:#8a5200;--led:#dbe9ff;--led-bg:#0d0f12;--paper:#faf7f0;--thermal:#34465a;--ease:cubic-bezier(0.16,1,0.3,1);--hazard:repeating-linear-gradient(-45deg,#17181a 0 16px,#ffc20e 16px 32px);} .ds-canopy-band{height:48px;background:var(--canopy);border-bottom:2px solid var(--ink)} .ds-hazard{height:16px;background:var(--hazard)}"
     }
   ],
   "narrative": {
-    "northStar": "The Plate Exposure Record",
-    "overview": "Every surface is a darkroom record laid on a backlit table: a greyscale plate print in a black frame, with translucent ruled sheets laid askew over it, one per pipeline stage, each carrying its numbers. The paper is light; the only darkness is photographic (the plate frame, the scanner window, the contact sheet) or ink (the primary action, the active chapter, the selected stage).\n\nTone is evidential, not dramatic. Tonal value is information: the eleven-step zone ramp is the only grey scale and doubles as the confidence legend, so a cell's grey says how sure the system is. One colour exists outside the ramp, and it is reserved for a single meaning: what the plate grammar changed. Hatching is a material with meaning, not texture. The world rejects the category default of a black HUD with neon boxes and metric-card rows.\n\nDensity is high and ruled: hairline grids, step numbers, Δ columns, tabular quantities. Large condensed display caps carry headlines; everything that is a label or a number speaks in condensed mono.",
+    "northStar": "The Toll Plaza Lane",
+    "overview": "The site is a working toll lane. Each surface is a piece of plaza hardware: a yellow canopy fascia across the top, an asphalt lane with white paint and amber road studs, a booth with a dot-matrix LED display, a boom barrier, a thermal receipt printer, gantry signs over the lane, and a green exit sign at the end. Reading a plate is something that happens to a vehicle in the lane. It is never shown as a dashboard.\n\nGrounds alternate between concrete (the plaza apron, where you read) and asphalt (the lane, where things happen). The canopy yellow covers whole bands, not small accents. The interface vocabulary is borrowed from the plaza: lane signals carry state, the LED carries the reading, the receipt carries the finding. Type has four voices with fixed jobs, and they never swap. Vehicles, plates and road furniture are drawn in code and SVG. The only photographs are synthetic training plates and the visitor's own camera.\n\nThe world rejects the category default: a black HUD with neon bounding boxes and metric cards.",
     "keyCharacteristics": [
-      "Backlit paper ground; greys snapped to the eleven-step zone ramp (Zone 0 to Zone X).",
-      "Magenta is filtration: only grammar-changed characters, the grammar delta, and the filtration swatch.",
-      "Hatch materials carry meaning: single 45° hatch is a stage sheet, 90° cross-hatch is conflict, dashed outline is held back.",
-      "Square corners everywhere; hairline rules form every container.",
-      "Translucent sheets with soft ambient shadow, slightly rotated, settling with mass."
+      "Canopy-yellow fascia bands edged in 2px ink with a hazard stripe beneath.",
+      "Asphalt lanes bounded by 3–4px white lane paint and a dashed yellow centre line.",
+      "Lane signals (green arrow, red cross, unlit dot) are the only state markers.",
+      "Amber marks corrections and nothing else on the information layer.",
+      "Thermal receipts on warm paper print the results. Pending lines say pending.",
+      "Indian plates are drawn in code in their real colour schemes."
     ],
     "rules": [
       {
-        "name": "The Filtration Rule",
-        "body": "Magenta marks exactly what the plate grammar changed and nothing else: changed characters, raw characters the grammar rejected (struck), the grammar row's Δ, and the filtration swatch. Never use it for emphasis, links, focus, status or decoration.",
+        "name": "The Signal Is The State Rule",
+        "body": "State is shown only by a lane signal: green down-arrow means open, confirmed or accepted. Red cross means closed or rejected. An unlit grey dot (signal-unlit) means not reached yet. Do not use coloured badges, ticks or status pills.",
         "section": "colors"
       },
       {
-        "name": "The Zone Ramp Rule",
-        "body": "Every grey is a zone step. When grey encodes confidence, Zone 0 is least certain and Zone X most certain; a result's zone is `round(score × 10)`.",
+        "name": "The Amber Means Corrected Rule",
+        "body": "On the LED, overlays, slips and readouts, amber lights exactly the characters the plate rules changed, and only those. A reading with nothing to fix shows no amber.",
         "section": "colors"
       },
       {
-        "name": "The Photographic Dark Rule",
-        "body": "Dark fields (Zone 0 to 1) are reserved for photographic objects: the plate frame, the scanner window, the contact sheet. Body text never sits on them; only legends and display caps do.",
+        "name": "The Real Plate Rule",
+        "body": "Plates use real Indian schemes: white with black text for private, yellow with black for commercial, green with white for EV, white for Bharat series (YY BH #### X). Every plate carries the blue IND strip.",
         "section": "colors"
       },
       {
-        "name": "The Two Voices Rule",
-        "body": "Words that name or measure (labels, headers, quantities, plate strings, buttons) are condensed mono; sentences are Archivo. Display caps are for headings and plate parts only.",
+        "name": "The Four Voices Rule",
+        "body": "Signage caps are what's painted, LED is what the booth shows, thermal mono is what it prints, grotesque is the narrator. A plate reading appears in LED or receipt type, never in body type.",
         "section": "typography"
       },
       {
-        "name": "The Tabular Rule",
-        "body": "Numerals are tabular everywhere (`font-variant-numeric: tabular-nums` on body).",
-        "section": "typography"
-      },
-      {
-        "name": "The Paper Mass Rule",
-        "body": "Sheets move with mass: they settle on `cubic-bezier(0.3, 1.12, 0.5, 1)` with a slight overshoot; everything else eases on `cubic-bezier(0.16, 1, 0.3, 1)`. Under reduced motion, sheets and ledger rows are already laid out.",
-        "section": "elevation"
-      },
-      {
-        "name": "The One Sheet In Play Rule",
-        "body": "In a stack, only the sheet in play shows content; spent sheets pile up behind it as blank edges, offset and tilted, so the black-framed plate shows through.",
+        "name": "The Lit Not Lifted Rule",
+        "body": "Things that emit light glow in their own colour. Paper casts a shadow. Everything else sits flat or recessed.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "**Do** take every grey from the zone ramp, and map confidence to it as `round(score × 10)`.",
-      "**Do** keep magenta to grammar-changed characters, the grammar Δ, and the filtration swatch.",
-      "**Do** use hatching only as a legended material: single 45° hatch for a sheet, cross-hatch for conflict, dashed outline for held back.",
-      "**Do** draw containers with hairlines (1px Zone 8 inside, Zone 3 outside) and keep corners square.",
-      "**Do** set every label, number and plate string in condensed mono, numerals tabular.",
-      "**Do** frame photographic plates in Zone 0 and label every raster's provenance in the label voice.",
-      "**Do** show pending results as held back, never estimated."
+      "**Do** show state with a lane signal: green arrow open/confirmed, red cross closed/rejected, unlit dot not reached.",
+      "**Do** light amber on exactly the characters the plate rules changed, using amber ink (#8a5200) on paper and concrete.",
+      "**Do** draw plates in code in their real Indian scheme, with the IND strip.",
+      "**Do** use the hazard stripe only where plaza structure begins or ends: under the canopy, at the exit, on traffic islands.",
+      "**Do** print results on thermal paper, and print unfinished lines as pending, never as an estimate.",
+      "**Do** keep the four type voices on their jobs: signage caps, LED, thermal mono, grotesque.",
+      "**Do** put ink text on canopy yellow, and on asphalt invert the go button to yellow."
     ],
     "donts": [
-      "**Don't** use magenta for emphasis, links, focus, status or hover.",
-      "**Don't** introduce colours outside the zone ramp, paper, sheet and filtration tokens.",
-      "**Don't** put body prose on Zone 0 to 2 fields.",
-      "**Don't** add rounded corners, or shadows on anything that is not a sheet or a print.",
-      "**Don't** fall back to a black HUD with neon boxes or a row of metric cards."
+      "**Don't** build a black HUD with neon bounding boxes and metric cards.",
+      "**Don't** use amber for emphasis, highlights, warnings or gains. It means a character was corrected.",
+      "**Don't** add status badges, tick or cross glyph icons, or coloured pills. Use the signal.",
+      "**Don't** show dataset photographs. Vehicles are drawn, and plates are rendered or synthetic.",
+      "**Don't** set plate readings in body type.",
+      "**Don't** put small uppercase labels above headlines. Labels live inside hardware panels."
     ]
   }
 }

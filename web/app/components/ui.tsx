@@ -15,7 +15,7 @@ export function Arrow() {
 export function Signal({ go, off = false, label }: { go: boolean; off?: boolean; label?: string }) {
   const state = off ? "off" : go ? "go" : "stop";
   return (
-    <span className={`signal ${state}`} role="img" aria-label={label ?? (off ? "Not reached" : go ? "Lane open" : "Lane closed")}>
+    <span className={`signal ${state}`} {...(label === "" ? { "aria-hidden": true } : { role: "img", "aria-label": label ?? (off ? "Not reached" : go ? "Lane open" : "Lane closed") })}>
       <svg viewBox="0 0 24 24" aria-hidden="true">
         {off ? <circle cx="12" cy="12" r="4" /> : go ? <path d="M12 3v15M5 11l7 8 7-8" /> : <path d="M5 5l14 14M19 5L5 19" />}
       </svg>

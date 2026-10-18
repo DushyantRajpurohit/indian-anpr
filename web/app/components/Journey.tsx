@@ -14,8 +14,10 @@ const STATIONS = ["Camera", "Crop", "Read", "Rules", "Vote"];
 export default function Journey({ s, sample }: { s: JourneyStats; sample: Reading }) {
   const track = useRef<HTMLDivElement>(null);
   const [p, setP] = useState(0);
+  const [still, setStill] = useState(false);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setStill(true); return; }
     let raf = 0;
     const onScroll = () => {
       cancelAnimationFrame(raf);
@@ -49,12 +51,27 @@ export default function Journey({ s, sample }: { s: JourneyStats; sample: Readin
       rows: [["Parameters", "0.69M (2.8 MB in the browser)"], ["Output columns", "40"], ["Real plates seen in training", "0"]] },
     { h: "The rules fix it", led: sample.text, amber: amberMask(sample.parts, sample.changed),
       copy: "A state code, a district, a series, a number. Look-alike characters are swapped by position, and an odd shape costs more than a common one.",
-      rows: [["EasyOCR alone", pct(s.baselineExact)], ["+ plate rules", pct(s.correctedExact)], ["Gain", <span key="g" className="amb-ink">+{gain.toFixed(1)} pts</span>], ["Valid labels rewritten", `0 of ${s.validLabels.toLocaleString("en-IN")}`]] },
+      rows: [["EasyOCR alone", pct(s.baselineExact)], ["+ plate rules", pct(s.correctedExact)], ["Gain", `+${gain.toFixed(1)} pts`], ["Valid labels rewritten", `0 of ${s.validLabels.toLocaleString("en-IN")}`]] },
     { h: "Frames vote, once per car", led: "3 OF 3 AGREE",
       copy: "On video, each vehicle is tracked across frames and its readings vote. A plate is confirmed after three agreeing frames, so one blurred frame can't put a wrong number in the ledger.",
       rows: [["Confirm after", "3 agreeing frames"], ["Forget a car after", "1.5 s out of view"], ["Gain on video", <span key="v" className="pending">pending</span>]] },
   ];
   const stop = stops[at];
+
+  if (still)  // reduced motion: every station laid out at rest, no scroll-driven drive
+    return (
+      <section className="journey chapter" id="pipeline" aria-labelledby="h-journey">
+        <h2 className="sign-title" id="h-journey">How a plate is read</h2>
+        <div className="journey-still">
+          {stops.map((st, i) => (
+            <div key={st.h} className="journey-panel">
+              <div className="journey-copy"><h3 className="sign-head">{st.h}</h3><p>{st.copy}</p></div>
+              <div className="booth-panel"><Led text={st.led} amber={st.amber} />{st.fig}<dl className="readout">{st.rows.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl></div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
 
   return (
     <section className="journey" id="pipeline" aria-labelledby="h-journey">

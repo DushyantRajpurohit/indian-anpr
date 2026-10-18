@@ -97,7 +97,7 @@ export default function Scanner() {
     for (const b of boxes) {
       const [x1, y1, x2, y2] = b.box;
       g.lineWidth = 2 * s;
-      g.strokeStyle = b.done ? "#2bd46a" : "#f4f2ee";
+      g.strokeStyle = b.done ? "#2bd46a" : "#f2f1ea";
       g.setLineDash(b.done ? [] : [6 * s, 4 * s]);
       g.strokeRect(x1, y1, x2 - x1, y2 - y1);
       // Label in ink; only characters the plate rules changed are amber.
@@ -107,7 +107,7 @@ export default function Scanner() {
       g.fillRect(x1, y1 - 22 * s, tw, 20 * s);
       let x = x1 + 6 * s;
       for (const ch of chars) {
-        g.fillStyle = ch.fix ? "#ffb000" : "#f4f2ee";
+        g.fillStyle = ch.fix ? "#ffb000" : "#f2f1ea";
         g.fillText(ch.c, x, y1 - 7 * s);
         x += g.measureText(ch.c).width;
       }
@@ -194,7 +194,7 @@ export default function Scanner() {
   return (
     <div className="scanner">
       <div className="scanner-canopy">
-        <Signal go={signalGo} label={signalGo ? "Your lane is open" : "Your lane is closed"} />
+        <Signal go={signalGo} off={mode === "idle"} label={mode === "idle" ? "Your lane is not started" : signalGo ? "Your lane is open" : "Your lane is closed"} />
         <div><span className="sign-legend">Input</span><b>{mode === "camera" ? "Camera" : mode === "photo" ? "Photo" : "None"}</b></div>
         <div><span className="sign-legend">Models</span><b>{available === null ? "Checking" : available ? "Published" : "Held back"}</b></div>
         <div><span className="sign-legend">Frames / s</span><b>{fps ? fps.toFixed(1) : "–"}</b></div>
