@@ -1,0 +1,184 @@
+{
+  "baseline": {
+    "images": 431,
+    "plates": 261,
+    "detection_recall": 0.962877030162413,
+    "finetuned_recall": 0.988399071925754,
+    "rows": [
+      {
+        "name": "Old detector + EasyOCR",
+        "exact": 0.18793503480278423,
+        "ci": [
+          0.1538697034617325,
+          0.22751423036612572
+        ],
+        "cer": 0.35878962536023057,
+        "note": ""
+      },
+      {
+        "name": "+ plate rules",
+        "exact": 0.3062645011600928,
+        "ci": [
+          0.2646175339930411,
+          0.3513345736249972
+        ],
+        "cer": 0.3225264169068204,
+        "note": "+11.8 pts from plate rules"
+      },
+      {
+        "name": "Fine-tuned detector + EasyOCR + rules",
+        "exact": 0.27610208816705334,
+        "ci": [
+          0.2360128077423146,
+          0.3201474124390111
+        ],
+        "cer": 0.3242074927953891,
+        "note": ""
+      },
+      {
+        "name": "Fine-tuned detector + synthetic-trained reader",
+        "exact": 0.4547563805104408,
+        "ci": [
+          0.4083512123907402,
+          0.5019609564541908
+        ],
+        "cer": 0.17915465898174832,
+        "note": "+17.9 pts over EasyOCR"
+      },
+      {
+        "name": "+ plate rules",
+        "exact": 0.4593967517401392,
+        "ci": [
+          0.41291333969316996,
+          0.5065975810651016
+        ],
+        "cer": 0.18179634966378483,
+        "note": "+0.5 pts from plate rules"
+      }
+    ],
+    "vote": {
+      "cars": 23,
+      "frames": 136,
+      "single_frame_exact": 0.39705882352941174,
+      "single_frame_ci": [
+        0.318740813952779,
+        0.48103264401680934
+      ],
+      "voted_exact": 0.391304347826087,
+      "voted_ci": [
+        0.22157377982382145,
+        0.5921482039625402
+      ]
+    }
+  },
+  "audit": {
+    "labelled_images": 1696,
+    "repeated_plates": 219,
+    "images_with_repeated_plate": 932,
+    "most_repeated": [
+      "plate-withheld",
+      41
+    ],
+    "bad_labels": 74,
+    "bad_label_examples": [
+      "CRETA",
+      "TERRANO",
+      "blur",
+      "RJD1AB1234",
+      "plate-withheld"
+    ],
+    "test_images": 431,
+    "test_plates": 261,
+    "roboflow_images": 15338,
+    "roboflow_copies_per_photo": 3,
+    "roboflow_claimed_accuracy": "99%"
+  },
+  "corrector": [
+    {
+      "raw": "RJ1ACD1234",
+      "corrected": "RJ 14 CD 1234",
+      "changed": [
+        3
+      ]
+    },
+    {
+      "raw": "8R0IAB1Z34",
+      "corrected": "BR 01 AB 1234",
+      "changed": [
+        0,
+        3,
+        7
+      ]
+    },
+    {
+      "raw": "IND MH12AB1234",
+      "corrected": "MH 12 AB 1234",
+      "changed": []
+    },
+    {
+      "raw": "22 8H 1234 A",
+      "corrected": "22 BH 1234 A",
+      "changed": [
+        2
+      ]
+    },
+    {
+      "raw": "GJ1KF1111",
+      "corrected": "GJ 1 KF 1111",
+      "changed": []
+    }
+  ],
+  "detect": {
+    "box": [
+      0.15870799403036795,
+      0.33135829380580356,
+      0.685008797594296,
+      0.330626708984375
+    ],
+    "conf": 0.9160019755363464
+  },
+  "pending": [],
+  "states": [
+    "AN",
+    "AP",
+    "AR",
+    "AS",
+    "BR",
+    "CG",
+    "CH",
+    "CT",
+    "DD",
+    "DL",
+    "DN",
+    "GA",
+    "GJ",
+    "HP",
+    "HR",
+    "JH",
+    "JK",
+    "KA",
+    "KL",
+    "LA",
+    "LD",
+    "MH",
+    "ML",
+    "MN",
+    "MP",
+    "MZ",
+    "NL",
+    "OD",
+    "OR",
+    "PB",
+    "PY",
+    "RJ",
+    "SK",
+    "TG",
+    "TN",
+    "TR",
+    "TS",
+    "UA",
+    "UK",
+    "UP",
+    "WB"
+  ]
+}
