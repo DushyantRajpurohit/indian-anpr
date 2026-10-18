@@ -14,6 +14,8 @@ from anpr import metrics, plate
     ("IND RJ14CD1234", "RJ 14 CD 1234"),  # HSRP 'IND' strip read as text
     ("22BH1234AA", "22 BH 1234 AA"),      # Bharat series
     ("22 8H 1234 A", "22 BH 1234 A"),
+    ("GJ1KF1111", "GJ 1 KF 1111"),        # older plate without the leading zero stays as printed
+    ("KL7BZ99", "KL 7 BZ 99"),
 ])
 def test_correct_fixes_by_position(raw, want):
     assert plate.correct(raw) == want

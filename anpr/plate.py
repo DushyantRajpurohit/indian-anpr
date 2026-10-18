@@ -27,17 +27,30 @@ def _fit(chunk, kind):
     return "".join(out), edits
 
 
+EDIT_COST = 1.5
+
+
 def _templates(n):
-    """Yield (kinds, lengths, penalty) splits of an n-char string. Penalty prefers common shapes."""
+    """Yield (kinds, lengths) splits of an n-char string."""
     for d in (2, 1):
         for s in (2, 1, 3, 0):
-            num = n - 2 - d - s
-            if 1 <= num <= 4:
-                # ponytail: hand-picked priors; fit from label frequencies once the test set exists
-                yield "A9A9", (2, d, s, num), (d != 2) + (s != 2) * 0.5 + (num != 4)
+            if 1 <= n - 2 - d - s <= 4:
+                yield "A9A9", (2, d, s, n - 2 - d - s)
     for s in (2, 1):
         if n == 8 + s:
-            yield "9A9A", (2, 2, 4, s), 0
+            yield "9A9A", (2, 2, 4, s)
+
+
+def _shape_cost(parts):
+    """How unusual a grammatical plate is. Delhi alone routinely has 1-digit districts and 3-letter series."""
+    if parts[1] == "BH":
+        return 0
+    state, district, series, number = parts
+    dl = state == "DL"
+    # ponytail: hand-set from known plate styles; fit to label frequencies if the training labels grow
+    return ((len(district) == 1) * (0.5 if dl else 1.5)
+            + {2: 0, 1: 0.5, 0: 1.5}.get(len(series), 0.5 if dl else 2)
+            + (len(number) != 4))
 
 
 def correct(raw):
@@ -45,7 +58,7 @@ def correct(raw):
     text = re.sub(r"[^A-Z0-9]", "", raw.upper())
     best = None
     for t in {text, text.removeprefix("IND")}:
-        for kinds, lens, penalty in _templates(len(t)):
+        for kinds, lens in _templates(len(t)):
             parts, edits, i = [], 0, 0
             for kind, n in zip(kinds, lens):
                 fit = _fit(t[i:i + n], kind)
@@ -58,7 +71,7 @@ def correct(raw):
                 bh = kinds == "9A9A"
                 if (parts[1] != "BH") if bh else (parts[0] not in STATES):
                     continue
-                score = (edits + penalty, edits)
+                score = (edits * EDIT_COST + _shape_cost(parts), edits)
                 if best is None or score < best[0]:
                     best = (score, " ".join(p for p in parts if p))
     return best and best[1]
