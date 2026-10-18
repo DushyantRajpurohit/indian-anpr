@@ -36,3 +36,10 @@ console.log(`ok: ${vectors.length} parity vectors, decode, vote, tracker`);
   assert.deepEqual(got[0].box, [120, 80, 280, 120]); // back to source pixels at scale 0.5
   console.log("ok: raw-head NMS");
 }
+
+// Every hero vehicle's misread must correct to exactly its printed plate.
+{
+  const { VEHICLES } = await import("./vehicles.ts");
+  for (const v of VEHICLES) assert.equal(correct(v.raw)?.text, v.plate.join(" "), v.raw);
+  console.log(`ok: ${VEHICLES.length} hero vehicles`);
+}

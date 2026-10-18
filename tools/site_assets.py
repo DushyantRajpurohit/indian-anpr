@@ -103,6 +103,11 @@ if __name__ == "__main__":
     strip = reader.prep(synth.degrade(hero, random.Random(3)))[0]
     strip = ((strip - strip.min()) / (strip.max() - strip.min()) * 255).astype(np.uint8)
     write("reader-input.png", cv2.resize(strip, None, fx=6, fy=6, interpolation=cv2.INTER_NEAREST))
+    # Synthetic plates for the traffic stream: real renders from the generator, one file each.
+    (WEB / "public/plates/synth").mkdir(parents=True, exist_ok=True)
+    for i in range(32):
+        img = synth.render(random.Random(200 + i))[0]
+        cv2.imwrite(str(WEB / f"public/plates/synth/{i:02d}.jpg"), cv2.resize(img, (int(img.shape[1] * 90 / img.shape[0]), 90)), [cv2.IMWRITE_JPEG_QUALITY, 82])
     # Synthetic training grid: 4x3 real renders from the generator.
     tiles = [cv2.resize(synth.render(random.Random(100 + i))[0], (320, 110)) for i in range(12)]
     write("synthetic-grid.png", np.vstack([np.hstack(tiles[i:i + 4]) for i in range(0, 12, 4)]))

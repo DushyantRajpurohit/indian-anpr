@@ -6,7 +6,8 @@ import {
   type Confirmed, type Read, type Reading,
 } from "@/lib/anpr";
 import { partName } from "@/lib/states";
-import { Arrow, asset, Chars, pct } from "./ui";
+import { amberMask, Led } from "./Led";
+import { asset, Chars, pct, Signal } from "./ui";
 
 const ORT_URL = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.30.0/dist/ort.wasm.min.mjs";
 const MAX_PLATES = 4;
@@ -33,7 +34,7 @@ export default function Scanner() {
   const [ledger, setLedger] = useState<Confirmed[]>([]);
   const [log, setLog] = useState<Entry[]>([]);
   const print = useCallback((tag: string, text: string, warn = false) =>
-    setLog((l) => [{ at: new Date(), tag, text, warn }, ...l].slice(0, 40)), []);
+    setLog((l) => [{ at: new Date(), tag, text, warn }, ...l].slice(0, 8)), []);
 
   useEffect(() => {
     work.current = { det: document.createElement("canvas"), rdr: document.createElement("canvas") };
@@ -96,17 +97,17 @@ export default function Scanner() {
     for (const b of boxes) {
       const [x1, y1, x2, y2] = b.box;
       g.lineWidth = 2 * s;
-      g.strokeStyle = "#f4f2ee";
+      g.strokeStyle = b.done ? "#2bd46a" : "#f4f2ee";
       g.setLineDash(b.done ? [] : [6 * s, 4 * s]);
       g.strokeRect(x1, y1, x2 - x1, y2 - y1);
-      // Label in ink; only characters the plate grammar changed are magenta.
+      // Label in ink; only characters the plate rules changed are amber.
       const chars = b.reading ? b.reading.parts.flatMap((p, i) => [...(i ? [{ c: " ", fix: false }] : []), ...p.split("").map((c, j) => ({ c, fix: b.reading!.changed[i][j] }))]) : b.label.split("").map((c) => ({ c, fix: false }));
       const tw = g.measureText(chars.map((x) => x.c).join("")).width + 12 * s;
       g.fillStyle = "#121212";
       g.fillRect(x1, y1 - 22 * s, tw, 20 * s);
       let x = x1 + 6 * s;
       for (const ch of chars) {
-        g.fillStyle = ch.fix ? "#e0218a" : "#f4f2ee";
+        g.fillStyle = ch.fix ? "#ffb000" : "#f4f2ee";
         g.fillText(ch.c, x, y1 - 7 * s);
         x += g.measureText(ch.c).width;
       }
@@ -188,60 +189,56 @@ export default function Scanner() {
     setMode("idle");
   }
 
+  const latest = ledger[0];
+  const signalGo = mode !== "idle" && !!available;
   return (
     <div className="scanner">
-      <div className="scanner-head">
-        <div><div className="legend muted">Input</div><div className="qty">{mode === "camera" ? "camera" : mode === "photo" ? "photo" : "none"}</div></div>
-        <div><div className="legend muted">Models</div><div className="qty">{available === null ? "checking" : available ? "published" : "held back"}</div></div>
-        <div><div className="legend muted">Frames / s</div><div className="qty">{fps ? fps.toFixed(1) : "—"}</div></div>
-        <div><div className="legend muted">Uploaded</div><div className="qty">0 bytes</div></div>
+      <div className="scanner-canopy">
+        <Signal go={signalGo} label={signalGo ? "Your lane is open" : "Your lane is closed"} />
+        <div><span className="sign-legend">Input</span><b>{mode === "camera" ? "Camera" : mode === "photo" ? "Photo" : "None"}</b></div>
+        <div><span className="sign-legend">Models</span><b>{available === null ? "Checking" : available ? "Published" : "Held back"}</b></div>
+        <div><span className="sign-legend">Frames / s</span><b>{fps ? fps.toFixed(1) : "–"}</b></div>
+        <div><span className="sign-legend">Uploaded</span><b>0 bytes</b></div>
       </div>
       <div className="scanner-body">
-        <div>
+        <div className="scanner-lane">
           <div className="window">
             <video ref={video} playsInline muted hidden={mode !== "camera"} />
             {mode === "photo" && photo && <img className="still" src={photo} alt="The photo you opened" />}
             <canvas ref={overlay} className="overlay" aria-hidden="true" />
             {mode === "idle" && (
               <div className="idle">
-                <div>
-                  <div className="display">No input</div>
-                  <p className="legend" style={{ marginTop: 12 }}>Open the camera or a photo to begin</p>
-                </div>
+                <p className="sign-head">Lane closed</p>
+                <p>Open your camera or a photo. Nothing leaves this tab.</p>
               </div>
             )}
           </div>
           <div className="controls">
-            <button className="btn primary" onClick={startCamera}><span>Open camera</span><span className="tag"><Arrow /></span></button>
-            <label className="btn">
+            <button className="btn go" onClick={startCamera}><Signal go label="" /><span>Open camera</span></button>
+            <label className="btn ghost">
               <span>Open a photo</span>
               <input type="file" accept="image/*" hidden onChange={(e) => e.target.files?.[0] && openPhoto(e.target.files[0])} />
             </label>
-            <button className="btn" onClick={stop} disabled={mode === "idle"}><span>Stop</span></button>
+            <button className="btn ghost" onClick={stop} disabled={mode === "idle"}>Stop</button>
           </div>
         </div>
-        <div className="ledger">
-          <div className="ledger-scroll">
-            <table className="table" aria-label="Plates read">
-              <thead><tr><th>Plate</th><th>Confidence</th><th>Frames</th><th>Time</th></tr></thead>
-              <tbody aria-live="polite">
-                {ledger.length === 0 && (
-                  <tr className="held"><td colSpan={4}><span className="held-back legend">empty · confirmed plates land here</span></td></tr>
-                )}
-                {ledger.map((e) => (
-                  <tr key={e.id} className="drop">
-                    <td><Chars reading={e.reading} /><span className="muted state-name">{partName(e.reading.parts, 0)}</span></td>
-                    <td className="qty"><span className="zone-cell" style={{ width: 16, height: 12, marginRight: 8, background: `var(--z${Math.round(e.conf * 10)})` }} />{pct(e.conf)}</td>
-                    <td className="qty">{e.frames}</td>
-                    <td className="qty">{clock(e.at)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="scanner-booth">
+          <Led text={latest ? latest.reading.text : "NO PLATE YET"} amber={latest ? amberMask(latest.reading.parts, latest.reading.changed) : []} small />
+          <div className="receipt ledger" aria-label="Plates read">
+            <p className="receipt-head"><span>Plate</span><span>Conf.</span><span>Frames</span><span>Time</span></p>
+            <div className="ledger-scroll" aria-live="polite">
+              {ledger.length === 0 && <p className="pending-line">Empty. Confirmed plates print here.</p>}
+              {ledger.map((e) => (
+                <p key={e.id} className="drop">
+                  <span><Chars reading={e.reading} /><small>{partName(e.reading.parts, 0)}</small></span>
+                  <span>{pct(e.conf)}</span><span>{e.frames}</span><span>{clock(e.at)}</span>
+                </p>
+              ))}
+            </div>
           </div>
           <div className="log" role="log" aria-label="Scanner log">
             {log.map((l, i) => (
-              <p key={i} className={l.warn ? "warn" : undefined}><span className="muted">{clock(l.at)}</span><b>{l.tag.toUpperCase()}</b><span>{l.text}</span></p>
+              <p key={i} className={l.warn ? "warn" : undefined}><span>{clock(l.at)}</span><b>{l.tag}</b><span>{l.text}</span></p>
             ))}
           </div>
         </div>

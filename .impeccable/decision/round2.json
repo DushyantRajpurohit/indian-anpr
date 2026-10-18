@@ -1,0 +1,130 @@
+{
+  "title": "Redesign: choose the new world for indian-anpr",
+  "question": "The roll assigned Highway Signage. Keep it, take an alternate, or re-roll. (Brief: more motion, easier to understand, fun to explore, story first.)",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Highway Signage",
+      "kicker": "THE ROLL",
+      "lineage": "Indian expressway guide signs, overhead gantries and yellow-capped kilometre stones",
+      "thesis": "The story is a drive down an Indian expressway: every chapter is a sign you pass, and the ANPR camera sits on the gantry reading the cars below.",
+      "palette": ["#0A6B3B", "#FFFFFF", "#F4C400", "#24262A", "#E8E4D8"],
+      "materials": ["retroreflective sign sheeting", "painted concrete km stones", "lane paint and road studs", "a steel gantry with a camera"],
+      "viewport": "A full-width green gantry sign reading Indian plates, read live, under it a lane of traffic where each passing car's plate gets boxed and read; exits on the sign are the chapters (Traps 2 km, Rules 4 km, Results 6 km, Live scanner exit); the primary action is the Live scanner exit itself.",
+      "risk": "Can tip into a road-sign costume if motion is decoration rather than the story; signage type must stay readable at body sizes.",
+      "raised": [
+        {"from": "challenger-ink", "raise": "The pointer is your headlights: signs and plates glint and become readable where the light falls, and the gantry camera tracks it."},
+        {"from": "challenger-cyclorama", "raise": "The scroll is the drive: a scrubbable route with named stops, each stop deep-linkable."},
+        {"from": "challenger-forge", "raise": "Every stop shows one measured before and after (96.3% to 98.8%, 18.8% to 28.1%)."},
+        {"from": "challenger-memphis", "raise": "Controls are physical sign parts (flip panels, reflector studs) whose state changes their shape, not just their colour."},
+        {"from": "challenger-darkroom", "raise": "Try before commit: type any misread plate on the rules sign and watch the correction happen live."}
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "Toll Plaza Lane",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "FASTag toll lanes: booth canopies, boom barriers, lane signals and printed receipts",
+      "thesis": "ANPR's real home: cars roll into the lane, the plate is read, the barrier lifts and a receipt prints each finding.",
+      "palette": ["#FFC107", "#1F2328", "#2E7D32", "#D32F2F", "#F5F5F0"],
+      "materials": ["booth canopy stripes", "boom barrier", "thermal receipt paper", "lane signal lights"],
+      "viewport": "A toll lane seen head-on: a car pulls up, its plate is read and corrected letter by letter on the booth display, the barrier lifts into the headline; a receipt slip prints the numbers; primary action Open your lane (the live scanner).",
+      "risk": "The most obvious ANPR picture there is; receipts and booths can feel like a parking-app landing page."
+    },
+    {
+      "id": "challenger-loteria",
+      "label": "Housie Ticket",
+      "verdict": "competitive",
+      "lineage": "loteria card decks, fused with their Indian cousin: Tambola/housie tickets",
+      "thesis": "The caller calls a plate; your ticket of state codes fills in as the reader gets each one right.",
+      "palette": ["#F7C531", "#E2475E", "#1FB5AC", "#111111", "#FFF6E0"],
+      "materials": ["printed housie tickets", "flat carnival colour cards", "dried-bean markers"],
+      "viewport": "A called card flips to show a plate; a ticket grid of state codes below fills a bean when that state is read; the headline is the caller's riddle.",
+      "case": "Holds audience identification: housie is played at every Indian party and is genuinely fun to poke at. Loses product clarity: a recruiter has to translate a game into a pipeline.",
+      "risk": "Fun can bury the numbers; the story's rigour has to survive the game.",
+      "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-loteria-tabla-night-hero.webp"
+    },
+    {
+      "id": "challenger-memphis",
+      "label": "Memphis Showroom",
+      "verdict": "declined",
+      "lineage": "Memphis Milano furniture showroom",
+      "thesis": "Each chapter a toy-like object in a showroom.",
+      "palette": ["#F7A8C4", "#9FE3C8", "#111111", "#F2E9D8"],
+      "materials": ["terrazzo speckle", "squiggle laminate"],
+      "viewport": "Chunky geometric blocks at play angles.",
+      "risk": "Nothing to do with roads or plates.",
+      "case": "Fuses poorly: playful, but no recruiter connects it to number plates.",
+      "kept": "Controls are distinct physical parts whose state changes shape.",
+      "hero": "https://impeccable.style/worlds/cards/design-canon-memphis-showroom-morning-hero.webp"
+    },
+    {
+      "id": "challenger-ink",
+      "label": "Ink Basin",
+      "verdict": "declined",
+      "lineage": "suminagashi marbling",
+      "thesis": "The page as a liquid surface.",
+      "palette": ["#1E2A55", "#2B2B2B", "#F5F3EE"],
+      "materials": ["sumi ink", "water"],
+      "viewport": "A marbled basin answering the pointer.",
+      "risk": "Beautiful and unrelated.",
+      "case": "Fuses poorly on both axes.",
+      "kept": "The page answers the pointer live.",
+      "hero": "https://impeccable.style/worlds/cards/medium-native-fluid-ink-basin-hero.webp"
+    },
+    {
+      "id": "challenger-cyclorama",
+      "label": "Cyclorama Dawn",
+      "verdict": "declined",
+      "lineage": "theatre lighting on a cyclorama",
+      "thesis": "Night to day as the scroll.",
+      "palette": ["#05060A", "#1F3FB8", "#E88AA6", "#FFFFFF"],
+      "materials": ["light bands", "stage black"],
+      "viewport": "A horizon band rising from black.",
+      "risk": "Mood without mechanism.",
+      "case": "Fuses weakly: night-time reading matters for ANPR, but the stage frame does not.",
+      "kept": "A scrubbable timeline of named, linkable states.",
+      "hero": "https://impeccable.style/worlds/cards/stagecraft-theater-lighting-cyclorama-dawn-hero.webp"
+    },
+    {
+      "id": "challenger-forge",
+      "label": "Forge Strike",
+      "verdict": "declined",
+      "lineage": "blacksmith power hammer",
+      "thesis": "One blow per row, measured.",
+      "palette": ["#0E0E0E", "#6B6E73", "#FF6A1A"],
+      "materials": ["iron scale", "chalk marks"],
+      "viewport": "A glowing bar under the hammer.",
+      "risk": "Industrial costume.",
+      "case": "Fuses poorly: no tie to plates or roads.",
+      "kept": "Every step shows a measured before and after.",
+      "hero": "https://impeccable.style/worlds/cards/metal-forging-patina-blacksmith-scale-shower-hero.webp"
+    },
+    {
+      "id": "challenger-darkroom",
+      "label": "Darkroom Safelight",
+      "verdict": "declined",
+      "lineage": "printing darkroom under amber safelight",
+      "thesis": "The plate develops in the tray.",
+      "palette": ["#C2410C", "#1A1A1A", "#D9D9D9"],
+      "materials": ["safelight amber", "wet prints"],
+      "viewport": "A print emerging in a tray.",
+      "risk": "The world you just retired.",
+      "case": "Declined: it is the darkroom family the redesign is replacing.",
+      "kept": "Preview before committing.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-darkroom-safelight-bay-hero.webp"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code"},
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A dark computer-vision landing page, executed impeccably.",
+    "palette": ["#0B0F14", "#E6EDF3", "#22D3EE"],
+    "materials": ["near-black ground", "glowing detection boxes", "metric cards"],
+    "viewport": "Headline and demo video side by side, a row of metric cards under it, a Try it live button.",
+    "risk": "Indistinguishable from every other ANPR demo by design."
+  },
+  "steer": true
+}

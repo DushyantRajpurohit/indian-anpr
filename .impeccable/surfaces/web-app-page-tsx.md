@@ -7,30 +7,30 @@ related_targets: []
 
 ## Scope
 
-`web/app/page.tsx` and its components: the one-page story site for indian-anpr with the live camera scanner as its last chapter, Next.js static export on GitHub Pages. Mode: Persuade (the visitor should believe the work is rigorous and act: open the scanner, open the repo). Story first, then live (user decision).
+`web/app/page.tsx` and its components: the one-page story site for indian-anpr ending in the live camera scanner, Next.js static export on GitHub Pages. Mode: Persuade. Story first, then live (user decision). Redesign of the earlier darkroom-record world (retired; user found it static and hard to understand, wants it fun to explore).
 
 ## Audience, job, action
 
-Recruiters first: in one viewport, what this is (Indian plates read live in the browser) and that it is measured. ML engineers in depth: the data traps, the grammar, the results table. Actions: "Open the live scanner" (primary, works in place), "Read how it was built", repo link.
+Recruiters first: within one viewport they see a car roll into a toll lane, its plate read and corrected, and the barrier lift. ML engineers in depth: data traps, plate rules, results receipt. Actions: "Open your lane" (live scanner, primary), "Send the next vehicle" (hero toy), repo link.
 
 ## Constraints
 
-Numbers only from `web/public/data/*.json` mirrored from `reports/`; pending results render as held-back rows, never invented. No Sirisha/Kaggle images on the site (CC BY-NC-ND): every plate image is our own synthetic render, labelled synthetic. Camera video never leaves the device; the page says so. Works with no camera, no plates in view, models not yet published. First person, Dushyant Rajpurohit.
+Numbers only from `web/data/site.json` (mirrored from `reports/`); pending results print as PENDING, never estimated. No dataset photos on the site (CC BY-NC-ND); plates are rendered in code, vehicles are drawn. Camera video never leaves the device. Works with no camera, no plates in view, and before models load. First person, Dushyant Rajpurohit.
 
 ## Direction contract
 
-THESIS: A plate read as a darkroom exposure record: the frame under translucent sheets, one per pipeline stage, each carrying its numbers. Refuses the category default: a black HUD with neon boxes and a metric-card row.
+THESIS: ANPR at its real home: a toll lane. A vehicle rolls in, the booth reads and corrects its plate on an LED display, the barrier lifts, a receipt prints the finding. Refuses the category default: a black HUD with neon boxes and metric cards.
 
-OWN-WORLD: Backlit paper ground snapped to an eleven-step zone ramp (Zone 0 #121212 to Zone X #F4F2EE); magenta #E0218A is filtration only: it marks exactly what the plate grammar changed, nothing else. Hatch density is confidence; a 90° cross-hatch is conflict (leakage, raw vs corrected disagreeing); dotted outline is held back (pending). Ultra-condensed display caps (League Gothic), tracked condensed legends and tabular mono quantities (Martian Mono, condensed), body in Archivo on cleared light zones only. Every surface is a ruled record: hairline grids, step numbers, Δ columns.
+OWN-WORLD: Asphalt #202327 lane with white lane paint and road studs; canopy yellow #FFC20E carrying whole fascia bands with black hazard stripes on the islands; lane signals are the state system (green arrow = go/confirmed, red cross = rejected/closed); amber LED #FFB000 is the correction colour only: it lights exactly the characters the plate grammar changed. Booth displays in dot-matrix (Doto), canopy and headlines in heavy condensed signage caps (Big Shoulders Display), receipts in thermal mono (Fragment Mono) on warm paper #FAF7F0 with faded blue-black ink, body in Hanken Grotesk on concrete #E4E1D9. Plates are drawn in code in real Indian schemes (white private, yellow commercial, green EV, BH series).
 
-STORY: The visitor sees a plate read and corrected in front of them, learns the data traps (repeated plates, augmented copies, bad labels) and the plate grammar, trusts the results table because baseline and pending rows are both shown honestly, then opens the scanner on their own camera.
+STORY: The visitor watches and plays with the lane (sends a car, an auto with a yellow plate, a bike with a two-line plate, an EV), understands detect, read, correct, vote as stations a vehicle passes, sees the traps as closed lanes and the results as a printed receipt, then opens their own lane on their camera.
 
-FIRST VIEWPORT: Left rail: wordmark INDIAN ANPR / PLATE EXPOSURE RECORD, the zone ramp doubling as the confidence legend, the magenta filtration swatch labelled "grammar correction only", material legend (sheet, conflict hatch, held back). Centre: display headline "READ THE PLATE. PROVE IT." at ~9rem, a two-line first-person dek, primary action "OPEN THE LIVE SCANNER →" and "READ HOW IT WAS BUILT". Right: a session sheet laid askew over a synthetic plate negative: the read RJ14CD1234 in ruled State | District | Series | Number columns, raw "RJ1ACD1234" above it with the A struck in magenta, Δ +9.3 pts note, stage rows detect/crop/read/correct. Top strip: system / dataset / test set 431 images / status cells.
+FIRST VIEWPORT: Top: the canopy fascia, a full-width yellow band with lane numbers and lane signals that double as navigation, the headline in black signage caps "Every plate, read at the barrier." and a one-line first-person dek. Below it the lane in perspective on asphalt: a drawn vehicle rolls up to the boom barrier, a dashed box locks onto its plate, the booth's LED display flips RJ1ACD1234 into RJ 14 CD 1234 with the 4 in amber, the barrier lifts, a receipt slip prints "+9.3 pts from plate rules". Controls on the booth: "Send the next vehicle" and the primary green-signal action "Open your lane".
 
-FORM: Darkroom exposure record on translucent sheets (catalog challenger operate-b-exposure-record-zone-sheets, chosen by the user over the roll's assigned candidate 7, The Registration Schedule). Seed key 044912ba. Signature interaction: as the pipeline chapter scrolls, the stacked stage sheets slide aside one by one with slight overshoot (detect → crop → read → correct → vote), each revealing the next with its numbers; in the scanner, each confirmed plate's sheet drops into the ledger. Reduced motion: sheets already laid out.
+FORM: Toll plaza lane, the grounded pick (IMPECCABLE'S PICK card), chosen by the user over the roll's assigned candidate 5 (Highway Signage). Seed key e0ae1dfd. Signature interaction: the hero lane is a toy: each "Send the next vehicle" brings a different vehicle and plate rule through detect, read, correct, barrier, receipt; in "How a plate is read" the scroll drives one vehicle through five stations whose booth display shows that station's output and numbers; in the rules chapter the visitor types any misread into the booth and watches the correction live. Reduced motion: every station shown at rest, the barrier up.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
 ## Unresolved
 
-Final detector, reader and voting numbers (Kaggle runs in progress); measured in-browser frame rate.
+Final reader numbers (reader v2 training) and the voting gain on video frames.
