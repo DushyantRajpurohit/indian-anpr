@@ -52,7 +52,9 @@ def main(weights="models/generic_best.pt"):
         "plates": len({data.clean(t) for t in truths}),
         "detection_recall@0.5": sum(r["detected"] for r in rows) / len(rows),
         "ocr_raw": metrics.score([r["raw"] for r in rows], truths),
-        "ocr_corrected": metrics.score([r["corrected"] for r in rows], truths),
+        # A rejected reading falls back to the raw text rather than counting as blank.
+        "ocr_corrected": metrics.score([r["corrected"] or r["raw"] for r in rows], truths),
+        "corrector_rejected": sum(r["corrected"] is None for r in rows),
         "rows": rows,
     }
     print(json.dumps({k: v for k, v in report.items() if k != "rows"}, indent=2))
