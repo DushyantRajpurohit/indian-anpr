@@ -29,7 +29,7 @@ split **by plate number** so no car appears in both training and test. 95% Wilso
 
 1. **More than half the labelled images repeat a plate.** 219 plate numbers cover 932 images, and one car appears 41 times. A random split would score memory, so the split is by plate number (`anpr/data.py`).
 2. **The 15k-image detection set is about 5,100 photos, each shown as ~3 Roboflow augmented copies**, spread across its own train, valid and test folders. That leak explains its advertised 99%. I regrouped by original photo before splitting (`kaggle/detector/train_detector.py`).
-3. **74 labels are not plates** (`CRETA`, `TERRANO`, `blur`, typos like `RJD1AB1234`). The plate rules flag them, and they are left out of the test set.
+3. **74 labels are not plates** (`CRETA`, `TERRANO`, `blur`, typos such as a D where a 0 belongs). The plate rules flag them, and they are left out of the test set.
 4. **Synthetic v1 was too easy.** On real plates it scored 43% exact, against near-zero synthetic loss. Looking at real *training-split* crops showed what was missing: very condensed lettering, dot or dash separators, crops clipped at the first character, bolts, logos and grime. Synthetic v2 adds them, which raised training-split exact match from 43% to 55%.
 
 ## Honest notes

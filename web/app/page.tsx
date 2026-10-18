@@ -51,13 +51,13 @@ export default function Home() {
         <p className="lede">Each of these would have handed me a better number than the model deserved.</p>
         <div className="closed-lanes">
           {[
-            ["Repeated cars", `${a.repeated_plates} plates appear in ${a.images_with_repeated_plate} images; ${a.most_repeated[0]} appears ${a.most_repeated[1]} times.`,
+            ["Repeated cars", `${a.repeated_plates} plates appear in ${a.images_with_repeated_plate} images; one car appears ${a.most_repeated_count} times.`,
               "A random split puts the same car in training and test, so the score measures memory, not reading.",
               `Split by plate number: ${a.test_images} test images, ${a.test_plates} plates, none seen in training.`],
             ["Augmented copies", `The ${a.roboflow_images.toLocaleString("en-IN")}-image detection set is about ${a.roboflow_copies_per_photo} augmented copies of each photo, spread across its own train and test folders.`,
               `That is how it can advertise ${a.roboflow_claimed_accuracy} accuracy: its test folder holds copies of training photos.`,
               "Regroup by original photo before splitting."],
-            ["Bad labels", `${a.bad_labels} labels are not plates: ${a.bad_label_examples.slice(0, 3).join(", ")} are car names and notes; ${a.bad_label_examples[3]} is a typo.`,
+            ["Bad labels", `${a.bad_labels} labels are not plates: ${a.bad_label_examples.join(", ")} are car names and notes; others are typos, such as a D where a 0 belongs.`,
               "Scoring against a wrong label punishes a correct reading.",
               "The plate rules flag them; they are left out of the test set."],
           ].map(([t, found, would, fix], i) => (

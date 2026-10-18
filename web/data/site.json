@@ -75,17 +75,12 @@
     "labelled_images": 1696,
     "repeated_plates": 219,
     "images_with_repeated_plate": 932,
-    "most_repeated": [
-      "plate-withheld",
-      41
-    ],
+    "most_repeated_count": 41,
     "bad_labels": 74,
     "bad_label_examples": [
       "CRETA",
       "TERRANO",
-      "blur",
-      "RJD1AB1234",
-      "plate-withheld"
+      "blur"
     ],
     "test_images": 431,
     "test_plates": 261,

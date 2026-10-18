@@ -49,9 +49,9 @@ def audit():
         "labelled_images": len(rows),
         "repeated_plates": len(repeated),
         "images_with_repeated_plate": sum(repeated.values()),
-        "most_repeated": max(repeated.items(), key=lambda kv: kv[1]),
+        "most_repeated_count": max(repeated.values()),  # count only: no real plate numbers on the site
         "bad_labels": len(bad),
-        "bad_label_examples": ["CRETA", "TERRANO", "blur", "RJD1AB1234", "plate-withheld"],
+        "bad_label_examples": ["CRETA", "TERRANO", "blur"],
         "test_images": sum(r["split"] == "test" and r["valid"] for r in rows),
         "test_plates": len({data.clean(r["text"]) for r in rows if r["split"] == "test" and r["valid"]}),
         # From the Kaggle listing of sunrajbishnolia/license-plate-detection (Roboflow export).
