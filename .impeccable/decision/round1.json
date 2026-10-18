@@ -1,0 +1,128 @@
+{
+  "title": "Choose the visual world for indian-anpr",
+  "question": "The roll assigned The Registration Schedule. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "The Registration Schedule",
+      "kicker": "THE ROLL",
+      "lineage": "Indian legal schedules and notification typesetting: the rules that define every registration mark",
+      "thesis": "The site is the rulebook of Indian plates, and the scanner applies those rules in front of you.",
+      "palette": ["#ECE8DC", "#17140F", "#4B3A8C", "#F7F6F0", "#C9A227"],
+      "materials": ["ruled schedule tables", "numbered clauses with margin notes", "violet rubber-stamp ink", "an enamel-white plate as the only object"],
+      "viewport": "A numbered notice titled Schedule of registration marks over a real-format plate that splits live into four ruled columns (State, District, Series, Number); a stamped margin note cites the clause that fixed a misread 4 into an A; actions Read how it was built and Open the live scanner.",
+      "risk": "Dry and bureaucratic if the motion is timid; must evoke legal typesetting without imitating any government publication (no emblem, no official heading).",
+      "raised": [
+        {"from": "challenger-sneaker", "raise": "Every reading, live or in the results, carries one fixed label anatomy: State, District, Series, Number, confidence, time."},
+        {"from": "challenger-raku", "raise": "The pipeline has named stage states (detected, cropped, read, corrected, confirmed) that each plate visibly passes through."},
+        {"from": "challenger-terminal", "raise": "System states print themselves as schedule entries (model loading, camera denied, no plate in view), never spinners or toasts."},
+        {"from": "challenger-cdrom", "raise": "The live scanner keeps a fixed ruled frame where only the camera window and the ledger change."}
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "Highway Signage",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "NHAI green guide signs and yellow-capped kilometre stones",
+      "thesis": "The story is a highway: each chapter a kilometre stone, the live scanner waiting at the toll gate.",
+      "palette": ["#0B6B3A", "#FFFFFF", "#F2C200", "#2B2B2B"],
+      "materials": ["retroreflective sign sheeting", "painted concrete milestones", "lane markings"],
+      "viewport": "A full-width green guide sign reading Indian plates, read live, with distance lines as chapters (Dataset traps 2 km, Reader 4 km, Live scanner 6 km) and a toll-gate button that opens the camera.",
+      "risk": "The most familiar Indian-road image there is; signage type sits close to generic transport-sans landing pages."
+    },
+    {
+      "id": "challenger-riso",
+      "label": "Two-ink Register",
+      "verdict": "competitive",
+      "lineage": "risograph zine covers printed in two misregistered spot inks",
+      "thesis": "Every reading is printed in two inks that only snap into register when the plate is read right.",
+      "palette": ["#FFD21F", "#2448A8", "#2E4A2E", "#F2EFE6"],
+      "materials": ["newsprint stock", "fixed-size halftone", "blend-mode overlap ink"],
+      "viewport": "A plate printed in yellow and blue a few millimetres out of register, sliding into alignment as its text resolves; headline in the blue ink.",
+      "case": "Holds product clarity: register is a direct picture of confidence. Loses audience identification: zine culture again, close to the fraud site.",
+      "risk": "Echoes the hand-drawn zine already shipped; two sites by one author would look like a template.",
+      "hero": "https://impeccable.style/worlds/cards/posters-covers-sleeves-risograph-zine-cover-hero.webp"
+    },
+    {
+      "id": "challenger-darkroom",
+      "label": "Exposure Record Sheets",
+      "verdict": "competitive",
+      "lineage": "darkroom printer's exposure records on translucent overlays",
+      "thesis": "The camera frame sits under translucent sheets: detection, crop and reading as stacked overlays, confidence as hatch density.",
+      "palette": ["#1A1A1A", "#6E6E6E", "#D8D8D8", "#D1268E"],
+      "materials": ["tracing-paper overlays", "eleven-step zone ramp", "tabular mono quantities"],
+      "viewport": "A plate photo under three askew sheets, each labelled with its stage and a numeric weight; sliding a sheet reveals the next stage.",
+      "case": "Holds product clarity: overlays map one-to-one to the pipeline. Loses audience: darkroom notation is foreign to recruiters.",
+      "risk": "Grey and technical; can read as a tool rather than a story.",
+      "hero": "https://impeccable.style/worlds/cards/operate-b-exposure-record-zone-sheets-hero.webp"
+    },
+    {
+      "id": "challenger-sneaker",
+      "label": "Sneaker Box Wall",
+      "verdict": "declined",
+      "lineage": "stacked sneaker archive boxes",
+      "thesis": "Test plates as a wall of box end labels.",
+      "palette": ["#D9682B", "#111111", "#F7F4EE"],
+      "materials": ["box board", "end labels"],
+      "viewport": "A wall of end labels, one per test plate.",
+      "risk": "Unrelated to roads or plates.",
+      "case": "Fuses poorly: nobody connects number plates with shoe boxes.",
+      "kept": "One fixed label anatomy on every record.",
+      "hero": "https://impeccable.style/worlds/cards/textiles-weave-drape-fashion-sneaker-box-stacks-hero.webp"
+    },
+    {
+      "id": "challenger-raku",
+      "label": "Raku Firing",
+      "verdict": "declined",
+      "lineage": "raku ceramics smoke firing",
+      "thesis": "Each plate fired through stages.",
+      "palette": ["#141210", "#D9D6CF", "#E8622A"],
+      "materials": ["carbonized clay", "crackle glaze"],
+      "viewport": "A plate passing through kiln stages.",
+      "risk": "Metaphor with no tie to the subject.",
+      "case": "Fuses poorly on both axes.",
+      "kept": "Named stage states for every step of the pipeline.",
+      "hero": "https://impeccable.style/worlds/cards/clay-ceramics-fracture-raku-smoke-flash-hero.webp"
+    },
+    {
+      "id": "challenger-terminal",
+      "label": "Phosphor Terminal",
+      "verdict": "declined",
+      "lineage": "green-phosphor terminals",
+      "thesis": "The scanner as a live transcript.",
+      "palette": ["#0A0F0A", "#33FF66", "#145A28"],
+      "materials": ["scanline glass", "afterimage glow"],
+      "viewport": "Plate readings typed into a green transcript.",
+      "risk": "This is the category's AI-vision cliché.",
+      "case": "Fuses into the rut: green-on-black HUD is what every computer-vision demo ships.",
+      "kept": "System states print themselves instead of appearing as chrome.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-phosphor-terminal-midnight-hero.webp"
+    },
+    {
+      "id": "challenger-cdrom",
+      "label": "CD-ROM Console",
+      "verdict": "declined",
+      "lineage": "mid-90s rendered CD-ROM consoles",
+      "thesis": "The scanner as a bevelled console around a small video window.",
+      "palette": ["#9AA3A8", "#2C8C8C", "#6B4FA0"],
+      "materials": ["brushed panels", "bevelled toggles"],
+      "viewport": "A console framing the camera window.",
+      "risk": "Retro novelty, unreadable story.",
+      "case": "Fuses poorly: nostalgia unrelated to Indian plates.",
+      "kept": "A fixed frame where only the window changes.",
+      "hero": "https://impeccable.style/worlds/cards/digital-design-canon-cdrom-chrome-navigation-hero.webp"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code"},
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A dark computer-vision landing page, executed impeccably.",
+    "palette": ["#0B0F14", "#E6EDF3", "#22D3EE"],
+    "materials": ["near-black ground", "glowing detection boxes", "metric cards"],
+    "viewport": "Headline and demo video side by side, a row of metric cards under it, a Try it live button.",
+    "risk": "Indistinguishable from every other ANPR demo by design."
+  },
+  "steer": true
+}

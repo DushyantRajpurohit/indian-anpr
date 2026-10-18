@@ -30,45 +30,82 @@ def random_text(rng):
     return [p for p in (state, district, series, number) if p]
 
 
+def _line(text, font, stroke, squeeze):
+    """Text as an 8-bit mask, squeezed horizontally (real plate lettering is often very condensed)."""
+    b = font.getbbox(text, stroke_width=stroke)
+    m = Image.new("L", (b[2] - b[0] + 2, b[3] - b[1] + 2), 0)
+    ImageDraw.Draw(m).text((1 - b[0], 1 - b[1]), text, fill=255, font=font, stroke_width=stroke, stroke_fill=255)
+    return m.resize((max(1, int(m.width * squeeze)), m.height), Image.BILINEAR)
+
+
 def render(rng):
-    """(BGR image, label without spaces, two_line) for one synthetic plate."""
+    """(BGR image, label without spaces, two_line) for one synthetic plate.
+
+    v2, from looking at real training-split crops: text fills most of the plate height, lettering is
+    often very condensed, groups are split by dots or dashes, crops clip at the first character, and
+    plates carry bolts, brand logos and grime.
+    """
     parts = random_text(rng)
     two = rng.random() < 0.3
-    lines = [" ".join(parts[:2]), " ".join(parts[2:])] if two else [" ".join(parts)]
+    sep = rng.choice(("  ", " ", " ", "", ".", "-", " - "))
+    lines = [sep.join(parts[:2]), sep.join(parts[2:])] if two else [sep.join(parts)]
     if two and rng.random() < 0.4 and len(parts) == 4:  # 'RJ 14 CD' over '1234'
-        lines = [" ".join(parts[:3]), parts[3]]
+        lines = [sep.join(parts[:3]), parts[3]]
     bg, fg = rng.choice(SCHEMES)
-    font = ImageFont.truetype(str(rng.choice(FONTS)), 36)
-
-    sizes = [font.getbbox(t) for t in lines]
-    tw, lh = max(b[2] - b[0] for b in sizes), max(b[3] - b[1] for b in sizes)
-    strip = 17 if rng.random() < 0.6 else 0  # HSRP blue 'IND' strip
-    W, H = tw + strip + 22, lh * len(lines) + 10 * len(lines) + 10
+    fade = rng.uniform(0, 0.35)  # weathered paint drifts toward grey
+    bg = tuple(int(c * (1 - fade) + 150 * fade) for c in bg)
+    font = ImageFont.truetype(str(rng.choice(FONTS)), 48)
+    masks = [_line(t, font, rng.choice((0, 0, 0, 1, 2)), rng.uniform(0.7, 1.15)) for t in lines]
+    tw, lh = max(m.width for m in masks), max(m.height for m in masks)
+    gap = int(lh * rng.uniform(0.1, 0.3))
+    block = lh * len(masks) + gap * (len(masks) - 1)
+    H = int(block / rng.uniform(0.5, 0.85))
+    decor = rng.random()
+    left = int(H * 0.28) if decor < 0.5 else int(H * 0.7) if decor < 0.62 else 0  # IND strip / brand logo
+    margin = int(H * rng.uniform(0.04, 0.25))
+    W = left + tw + 2 * margin
     im = Image.new("RGB", (W, H), bg)
     d = ImageDraw.Draw(im)
-    d.rectangle([2, 2, W - 3, H - 3], outline=fg, width=2)
-    if strip:
-        d.rectangle([4, 4, 4 + strip - 4, H - 5], fill=(25, 60, 160))
-        d.text((5, H - 13), "IND", fill=(240, 240, 240), font=ImageFont.truetype(str(FONTS[0]), 7))
-    y = 6
-    for t, b in zip(lines, sizes):
-        d.text((strip + 11 + (tw - (b[2] - b[0])) // 2 - b[0], y - b[1]), t, fill=fg, font=font)
-        y += lh + 10
+    if rng.random() < 0.7:
+        d.rectangle([1, 1, W - 2, H - 2], outline=fg, width=rng.randint(1, 3))
+    if decor < 0.5:
+        d.rectangle([3, 3, left - 2, H - 4], fill=(25, 60, 160))
+        d.text((4, H - H // 4), "IND", fill=(240, 240, 240), font=ImageFont.truetype(str(FONTS[0]), max(6, H // 8)))
+    elif decor < 0.62:
+        c = tuple(rng.randint(0, 120) for _ in range(3))
+        d.ellipse([int(H * 0.1), int(H * 0.15), int(H * 0.6), int(H * 0.85)], fill=c)
+    if rng.random() < 0.5:  # bolts
+        r = max(2, H // 14)
+        for x in (W * rng.uniform(0.2, 0.35), W * rng.uniform(0.65, 0.8)):
+            for y in ((H * 0.1,) if rng.random() < 0.5 else (H * 0.1, H * 0.9)):
+                d.ellipse([x - r, y - r, x + r, y + r], fill=(90, 90, 90))
+    y = (H - block) // 2
+    for m in masks:
+        im.paste(Image.new("RGB", m.size, fg), (left + margin + (tw - m.width) // 2, y), m)
+        y += lh + gap
+    if rng.random() < 0.3:  # grime
+        g = Image.new("L", (W, H), 0)
+        gd = ImageDraw.Draw(g)
+        for _ in range(rng.randint(2, 8)):
+            x, y0, r = rng.randint(0, W), rng.randint(0, H), rng.randint(H // 10, H // 2)
+            gd.ellipse([x - r, y0 - r, x + r, y0 + r], fill=rng.randint(20, 90))
+        im.paste(Image.new("RGB", (W, H), (60, 50, 40)), (0, 0), g)
     return degrade(np.array(im)[:, :, ::-1].copy(), rng), "".join(parts), two
 
 
 def degrade(img, rng):
-    """Camera damage: perspective, crop jitter, blur, low resolution, light, noise, JPEG."""
+    """Camera damage: perspective, loose or clipped crop, blur, low resolution, light, noise, JPEG."""
     h, w = img.shape[:2]
     j = lambda s: rng.uniform(-s, s)
     src = np.float32([[0, 0], [w, 0], [w, h], [0, h]])
     dst = np.float32([[j(.06) * w, j(.12) * h], [w + j(.06) * w, j(.12) * h],
                       [w + j(.06) * w, h + j(.12) * h], [j(.06) * w, h + j(.12) * h]])
-    pad = rng.randint(0, 22)
+    # Negative padding clips the plate edge, as tight detector boxes do on real crops.
+    px, py = int(rng.uniform(-0.03, 0.10) * w), int(rng.uniform(-0.06, 0.25) * h)
     bg = tuple(int(c) for c in rng.choice(((30, 30, 30), (120, 120, 120), (200, 200, 200))))
-    img = cv2.warpPerspective(img, cv2.getPerspectiveTransform(src, dst + pad), (w + 2 * pad, h + 2 * pad),
-                              borderValue=bg)
-    scale = rng.uniform(0.3, 1.0)  # real crops are often 60-150 px wide
+    img = cv2.warpPerspective(img, cv2.getPerspectiveTransform(src, dst + np.float32([px, py])),
+                              (max(8, w + 2 * px), max(8, h + 2 * py)), borderValue=bg)
+    scale = rng.uniform(0.25, 1.0)  # real crops are often 60-150 px wide
     small = cv2.resize(img, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
     img = cv2.resize(small, (img.shape[1], img.shape[0]), interpolation=cv2.INTER_LINEAR)
     if rng.random() < 0.5:
@@ -77,7 +114,7 @@ def degrade(img, rng):
     img = img.astype(np.float32) * rng.uniform(0.4, 1.3) + rng.uniform(-40, 40)
     if rng.random() < 0.3:  # shadow or glare band
         x = rng.randint(0, img.shape[1])
-        img[:, x:x + rng.randint(6, img.shape[1] // 2)] *= rng.uniform(0.4, 1.6)
+        img[:, x:x + rng.randint(6, max(7, img.shape[1] // 2))] *= rng.uniform(0.4, 1.6)
     img += np.random.default_rng(rng.randint(0, 2**31)).normal(0, rng.uniform(0, 12), img.shape)
     img = np.clip(img, 0, 255).astype(np.uint8)
     ok, buf = cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, rng.randint(20, 90)])

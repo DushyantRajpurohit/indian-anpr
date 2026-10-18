@@ -21,7 +21,7 @@ from torch.utils.data import DataLoader, IterableDataset
 
 from anpr import data, plate, reader, synth
 
-STEPS, BATCH, EVAL_EVERY = 12000, 256, 1000
+STEPS, BATCH, EVAL_EVERY = 16000, 256, 1000
 
 
 class Synthetic(IterableDataset):

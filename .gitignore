@@ -5,3 +5,11 @@ data/
 runs/
 *.pt
 *.onnx
+web/node_modules/
+web/.next/
+web/out/
+web/next-env.d.ts
+*.tsbuildinfo
+# per-image rows carry CC BY-NC-ND dataset labels; publish summaries only
+reports/*.json
+reports/dev/

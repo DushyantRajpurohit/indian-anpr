@@ -77,3 +77,9 @@ def test_reader_shapes_and_ctc_decode():
     ids = [0] + reader.encode("RR") + [0] + reader.encode("J") + reader.encode("1") + [0] + reader.encode("1")
     logp = np.eye(len(reader.CHARS) + 1)[ids]
     assert reader.decode(logp) == "RJ11"
+
+
+def test_state_code_lookalikes():
+    assert plate.correct("MB36G6682") == "WB 36 G 6682"   # M read for W
+    assert plate.correct("RH01AB1234") == "MH 01 AB 1234"
+    assert plate.correct("ZZ01AB1234") is None              # no look-alike fixes this
