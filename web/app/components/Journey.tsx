@@ -7,6 +7,7 @@ import { asset, pct, Signal } from "./ui";
 export type JourneyStats = {
   detectionRecall: number; finetunedRecall: number; detectConf: number;
   baselineExact: number; correctedExact: number; validLabels: number; parityStrings: number;
+  easyocrExact: number; readerExact: number; vote: { cars: number; single_frame_exact: number; voted_exact: number };
 };
 
 const STATIONS = ["Camera", "Crop", "Read", "Rules", "Vote"];
@@ -48,13 +49,13 @@ export default function Journey({ s, sample }: { s: JourneyStats; sample: Readin
       fig: <img className="fig-strip" src={asset("/plates/reader-input.png")} alt="The 32 by 160 grey strip the reader is shown" /> },
     { h: "The reader reads it", led: "RJ1ACD1234",
       copy: "A small CRNN calls each of 40 columns a character or a blank, and repeats collapse. It never saw a real plate in training, only synthetic ones.",
-      rows: [["Parameters", "0.69M (2.8 MB in the browser)"], ["Output columns", "40"], ["Real plates seen in training", "0"]] },
+      rows: [["Real plates seen in training", "0"], ["EasyOCR on the test set", pct(s.easyocrExact)], ["This reader on the test set", pct(s.readerExact)], ["Size in the browser", "0.69M params, 2.8 MB"]] },
     { h: "The rules fix it", led: sample.text, amber: amberMask(sample.parts, sample.changed),
       copy: "A state code, a district, a series, a number. Look-alike characters are swapped by position, and an odd shape costs more than a common one.",
       rows: [["EasyOCR alone", pct(s.baselineExact)], ["+ plate rules", pct(s.correctedExact)], ["Gain", `+${gain.toFixed(1)} pts`], ["Valid labels rewritten", `0 of ${s.validLabels.toLocaleString("en-IN")}`]] },
     { h: "Frames vote, once per car", led: "3 OF 3 AGREE",
-      copy: "On video, each vehicle is tracked across frames and its readings vote. A plate is confirmed after three agreeing frames, so one blurred frame can't put a wrong number in the ledger.",
-      rows: [["Confirm after", "3 agreeing frames"], ["Forget a car after", "1.5 s out of view"], ["Gain on video", <span key="v" className="pending">pending</span>]] },
+      copy: "On video, each vehicle is tracked across frames and its readings vote, so one blurred frame can't put a wrong number in the ledger. On the dataset's video frames voting didn't help: consecutive frames make the same mistake, so they agree on it.",
+      rows: [["Confirm after", "3 agreeing frames"], [`Per frame (${s.vote.cars} cars)`, pct(s.vote.single_frame_exact)], ["Voted, one answer per car", pct(s.vote.voted_exact)]] },
   ];
   const stop = stops[at];
 

@@ -43,6 +43,7 @@ export default function Home() {
       <Journey sample={sample} s={{
         detectionRecall: site.baseline.detection_recall, finetunedRecall: site.baseline.finetuned_recall, detectConf: site.detect.conf,
         baselineExact: baseline.exact, correctedExact: corrected.exact, validLabels: a.labelled_images - a.bad_labels, parityStrings: 4000,
+        easyocrExact: site.baseline.rows[2].exact, readerExact: site.baseline.rows[3].exact, vote: site.baseline.vote,
       }} />
 
       <section className="chapter concrete" id="traps" aria-labelledby="h-traps">
@@ -103,7 +104,7 @@ export default function Home() {
         <div className="results-grid">
           <div>
             <h2 className="sign-title" id="h-results">The receipt</h2>
-            <p className="lede">Exact match means the whole plate right, every character. Every line is measured on the same {a.test_images} held-out photos; lines still training print as pending, not estimated.</p>
+            <p className="lede">Exact match means the whole plate right, every character. Every line is measured once, on the same {a.test_images} held-out photos. Each choice before that (which reader, which rules) was made on the training split.</p>
             <p className="muted">The test photos are mostly close-ups from used-car listings, Google Images and video frames, easier than live traffic, which is what your lane below is for. I looked at test failures once, after the baseline; every tuning decision since is checked on the training split.</p>
           </div>
           <div className="receipt big" role="table" aria-label="Results">
@@ -113,12 +114,13 @@ export default function Home() {
             {site.baseline.rows.map((r, i) => (
               <div key={r.name} className="receipt-row" role="row">
                 <p><span role="cell">{r.name}</span><span role="cell">{pct(r.exact)}</span><span role="cell">{r.cer.toFixed(2)}</span></p>
-                <p className="sub">95% range {pct(r.ci[0])} – {pct(r.ci[1])}{i === 1 && <b> · +{gain.toFixed(1)} pts from plate rules</b>}</p>
+                <p className="sub">95% range {pct(r.ci[0])} – {pct(r.ci[1])}{r.note && <b> · {r.note}</b>}</p>
               </div>
             ))}
-            {site.pending.map((p) => (
-              <div key={p} className="receipt-row pending-row" role="row"><p><span role="cell">{p}</span><span role="cell">pending</span><span role="cell">–</span></p></div>
-            ))}
+            <div className="receipt-row" role="row">
+              <p><span role="cell">Video frames, voted per car</span><span role="cell">{pct(site.baseline.vote.voted_exact)}</span><span role="cell">–</span></p>
+              <p className="sub">{site.baseline.vote.cars} cars, {site.baseline.vote.frames} frames · {pct(site.baseline.vote.single_frame_exact)} reading frames one by one</p>
+            </div>
             <p className="receipt-foot">Detector: {pct(site.baseline.detection_recall)} → {pct(site.baseline.finetuned_recall)} of plates found · numbers from reports/</p>
           </div>
         </div>

@@ -13,3 +13,4 @@ web/next-env.d.ts
 # per-image rows carry CC BY-NC-ND dataset labels; publish summaries only
 reports/*.json
 reports/dev/
+!web/public/models/*.onnx

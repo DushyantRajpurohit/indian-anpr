@@ -83,3 +83,11 @@ def test_state_code_lookalikes():
     assert plate.correct("MB36G6682") == "WB 36 G 6682"   # M read for W
     assert plate.correct("RH01AB1234") == "MH 01 AB 1234"
     assert plate.correct("ZZ01AB1234") is None              # no look-alike fixes this
+
+
+def test_vote_prefers_grammatical_majority():
+    from anpr.vote import vote
+    reads = [dict(raw="RJ14CD1234", corrected="RJ 14 CD 1234"), dict(raw="RJ14CD1284", corrected="RJ 14 CD 1284"),
+             dict(raw="RJ14CD1234", corrected="RJ 14 CD 1234"), dict(raw="XX", corrected=None)]
+    assert vote(reads) == "RJ14CD1234"
+    assert vote([dict(raw="AB", corrected=None), dict(raw="AB", corrected=None)]) == "AB"
