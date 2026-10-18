@@ -44,3 +44,19 @@ def test_read_lines_orders_two_line_plates():
     # EasyOCR returns boxes in arbitrary order; bottom line first here.
     results = [(box(50, 40), "1234", 0.9), (box(60, 2), "14", 0.9), (box(0, 0), "RJ", 0.9), (box(0, 42), "CD", 0.9)]
     assert read_lines(results) == "RJ14CD1234"
+
+
+def test_split_keeps_each_plate_on_one_side():
+    from anpr import data
+    # Same plate with different spacing/case must land together; ~25% go to test.
+    assert data.split_of("RJ27TC0530") == data.split_of("rj 27 tc 0530")
+    texts = [f"RJ14CD{i:04d}" for i in range(2000)]
+    share = sum(data.split_of(t) == "test" for t in texts) / len(texts)
+    assert 0.22 < share < 0.28
+
+
+def test_is_valid_flags_bad_labels():
+    from anpr import data
+    assert data.is_valid("RJ01AB1234")
+    assert not data.is_valid("RJD1AB1234")  # typo the corrector would have to change
+    assert not data.is_valid("CRETA")

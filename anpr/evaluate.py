@@ -1,22 +1,9 @@
-"""Score detector + OCR on Pascal VOC folders: python -m anpr.evaluate data/datacluster"""
+"""Score detector + OCR on the held-out plates: python -m anpr.evaluate [weights]"""
 import json
-import re
 import sys
 from pathlib import Path
 
-from anpr import metrics, plate
-
-
-def load_voc(root):
-    """Yield (image_path, [(box, text or None)]) from Annotations/*.xml."""
-    for xml in sorted(Path(root, "Annotations").glob("*.xml")):
-        s = xml.read_text()
-        objs = []
-        for o in re.findall(r"<object>(.*?)</object>", s, re.S):
-            box = [float(re.search(f"<{k}>(.*?)</{k}>", o).group(1)) for k in ("xmin", "ymin", "xmax", "ymax")]
-            t = re.search(r"number_plate_text</name>\s*<value>(.*?)</value>", o)
-            objs.append((box, t and t.group(1)))
-        yield Path(root, "images", xml.stem + ".jpg"), objs
+from anpr import data, metrics, plate
 
 
 def iou(a, b):
@@ -39,32 +26,31 @@ def read_lines(results):
     return "".join(t for _, ws in lines for _, t in sorted(ws))
 
 
-def main(root, weights="models/generic_best.pt"):
+def main(weights="models/generic_best.pt"):
     import cv2
     import easyocr
     from ultralytics import YOLO
 
     det, reader = YOLO(weights), easyocr.Reader(["en"], gpu=False, verbose=False)
-    found = total = 0
     rows = []
-    for img_path, objs in load_voc(root):
-        img = cv2.imread(str(img_path))
+    for r in data.load():
+        if r["split"] != "test" or not r["valid"]:
+            continue
+        img = cv2.imread(str(r["image"]))
         boxes = det(img, verbose=False)[0].boxes.xyxy.tolist()
-        for gt, text in objs:
-            total += 1
-            best = max(boxes, key=lambda b: iou(b, gt), default=None)
-            hit = best is not None and iou(best, gt) >= 0.5
-            found += hit
-            if text and plate.correct(text):  # skip partial labels like 'KL34F'
-                x1, y1, x2, y2 = map(int, best if hit else gt)
-                raw = read_lines(reader.readtext(img[y1:y2, x1:x2], allowlist="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"))
-                rows.append(dict(image=img_path.name, truth=text, detected=hit, raw=raw, corrected=plate.correct(raw)))
+        best = max(boxes, key=lambda b: iou(b, r["box"]), default=None)
+        hit = best is not None and iou(best, r["box"]) >= 0.5
+        # OCR the ground-truth crop when the detector misses, so OCR is scored on its own.
+        x1, y1, x2, y2 = map(int, best if hit else r["box"])
+        raw = read_lines(reader.readtext(img[y1:y2, x1:x2], allowlist="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"))
+        rows.append(dict(image=str(r["image"]), source=r["source"], truth=r["text"], detected=hit,
+                         raw=raw, corrected=plate.correct(raw)))
 
     truths = [r["truth"] for r in rows]
     report = {
-        "detection_recall@0.5": found / total,
-        "plates": total,
-        # OCR runs on the ground-truth crop when the detector misses, so OCR is scored on its own.
+        "images": len(rows),
+        "plates": len({data.clean(t) for t in truths}),
+        "detection_recall@0.5": sum(r["detected"] for r in rows) / len(rows),
         "ocr_raw": metrics.score([r["raw"] for r in rows], truths),
         "ocr_corrected": metrics.score([r["corrected"] for r in rows], truths),
         "rows": rows,
@@ -76,4 +62,4 @@ def main(root, weights="models/generic_best.pt"):
 if __name__ == "__main__":
     out = main(*sys.argv[1:])
     Path("reports").mkdir(exist_ok=True)
-    Path("reports/datacluster_baseline.json").write_text(json.dumps(out, indent=2))
+    Path("reports/baseline.json").write_text(json.dumps(out, indent=2))
