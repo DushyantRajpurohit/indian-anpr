@@ -1,4 +1,9 @@
-"""Fine-tune reader v2 on real plates from a CC BY 4.0 dataset (Kaggle GPU). Pushed with: kaggle kernels push -p kaggle/realft
+"""DO NOT USE. Kept as a record of a failed attempt (see README, "Honest notes").
+
+The Zenodo dataset below turned out to be a relabelled copy of the CC BY-NC-ND Sirisha set (our test
+source): 43 of 48 sampled labels were identical. The model this produced was discarded and never shipped.
+
+Original intent: fine-tune reader v2 on real plates from a CC BY 4.0 dataset (Kaggle GPU).
 
 Real data: "Number Plate Number Identification Dataset", Bhuma et al., Bapatla Engineering College,
 Zenodo 10.5281/zenodo.13954136, CC BY 4.0 (1,700 phone photos, plate text in an Excel sheet).
