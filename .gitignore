@@ -14,3 +14,4 @@ web/next-env.d.ts
 reports/*.json
 reports/dev/
 !web/public/models/*.onnx
+!reports/browser_speed.json

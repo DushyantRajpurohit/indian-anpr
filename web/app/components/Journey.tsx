@@ -8,6 +8,7 @@ export type JourneyStats = {
   detectionRecall: number; finetunedRecall: number; detectConf: number;
   baselineExact: number; correctedExact: number; validLabels: number; parityStrings: number;
   easyocrExact: number; readerExact: number; vote: { cars: number; single_frame_exact: number; voted_exact: number };
+  fps: { single_thread_fps: number; four_thread_fps: number };
 };
 
 const STATIONS = ["Camera", "Crop", "Read", "Rules", "Vote"];
@@ -55,7 +56,7 @@ export default function Journey({ s, sample }: { s: JourneyStats; sample: Readin
       rows: [["EasyOCR alone", pct(s.baselineExact)], ["+ plate rules", pct(s.correctedExact)], ["Gain", `+${gain.toFixed(1)} pts`], ["Valid labels rewritten", `0 of ${s.validLabels.toLocaleString("en-IN")}`]] },
     { h: "Frames vote, once per car", led: "3 OF 3 AGREE",
       copy: "On video, each vehicle is tracked across frames and its readings vote, so one blurred frame can't put a wrong number in the ledger. On the dataset's video frames voting didn't help: consecutive frames make the same mistake, so they agree on it.",
-      rows: [["Confirm after", "3 agreeing frames"], [`Per frame (${s.vote.cars} cars)`, pct(s.vote.single_frame_exact)], ["Voted, one answer per car", pct(s.vote.voted_exact)]] },
+      rows: [["Confirm after", "3 agreeing frames"], [`Per frame (${s.vote.cars} cars)`, pct(s.vote.single_frame_exact)], ["Voted, one answer per car", pct(s.vote.voted_exact)], ["Browser speed, 4-core laptop", `${s.fps.four_thread_fps} frames/s (${s.fps.single_thread_fps} on one thread)`]] },
   ];
   const stop = stops[at];
 

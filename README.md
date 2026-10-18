@@ -20,8 +20,10 @@ split **by plate number** so no car appears in both training and test. 95% Wilso
 | Fine-tuned detector + EasyOCR + rules | 27.6% | 23.6 – 32.0% | 0.32 |
 | **Fine-tuned detector + synthetic-trained reader** | **45.5%** | 40.8 – 50.2% | **0.18** |
 | + plate rules | 45.9% | 41.3 – 50.7% | 0.18 |
+| **Same, detector at 416 px (what the website runs)** | **50.1%** | 45.4 – 54.8% | **0.17** |
 
-- **Detector:** finds 98.8% of test plates, up from 96.3% for the generic model (IoU ≥ 0.5).
+- **Detector:** finds 98.8% of test plates, up from 96.3% for the generic model (IoU ≥ 0.5). The website runs it at 416 px instead of 640 for speed: training-split recall was 99.4% vs 99.3%, so I switched before scoring it on the test set, where it also read better (50.1% vs 45.9%).
+- **Browser speed:** about 5 frames/s on a 4-core laptop with CPU only (1.4 frames/s single-threaded). GitHub Pages cannot send the cross-origin-isolation headers that multi-threaded WebAssembly needs, so a small service worker (`web/public/coi-sw.js`) adds them. Measured with a fake camera feed in headless Chrome (`reports/browser_speed.json`).
 - **Multi-frame voting** on the dataset's video frames (23 cars, 136 frames): 39.7% per frame, 39.1% voted. No gain. Consecutive frames make the same mistake, so they agree on it.
 - **The plate rules matter most for a weak reader:** +11.8 points on EasyOCR, +0.5 on my reader. A reader trained on plates that always follow the format seems to learn most of the format itself.
 
@@ -37,6 +39,7 @@ split **by plate number** so no car appears in both training and test. 95% Wilso
 - The test photos are mostly close-ups (used-car listings, Google Images, video frames). They are easier than live traffic.
 - I looked at test-set failures once, after the baseline. Every decision since (synthetic v2, the state-code look-alike rule, choosing reader v2) was made on the training split, and each configuration above was run on the test set once.
 - My near-duplicate filter between the detection set and the test source was too aggressive. It dropped 3,054 photo groups, but a manual check of 29 random photos found none were real copies. It cost training data; it cannot inflate the test score.
+- **A "CC BY 4.0" dataset that wasn't.** Looking for licence-clean real plates, I found a Zenodo record (1,700 photos, credited to a college in Andhra Pradesh) and fine-tuned on it. Training-split accuracy jumped to 72%, which was suspicious. 43 of 48 sampled labels turned out to be identical to the no-derivatives Sirisha set, so the record is a relabelled copy of my own test source. I discarded that model; nothing shipped from it. Another "30k Indian plates, CC BY 4.0" Kaggle set turned out to be CAPTCHA images.
 - The test dataset is CC BY-NC-ND. It is used for evaluation only: no images or labels are redistributed here, and the shipped reader is trained only on synthetic data.
 
 ## Repo

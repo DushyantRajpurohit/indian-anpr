@@ -44,7 +44,7 @@ def make_reader(name):
     return read
 
 
-def main(detector="models/generic_best.pt", ocr="easyocr", split="test"):
+def main(detector="models/generic_best.pt", ocr="easyocr", split="test", imgsz=640):
     import cv2
     from ultralytics import YOLO
 
@@ -54,7 +54,7 @@ def main(detector="models/generic_best.pt", ocr="easyocr", split="test"):
         if r["split"] != split or not r["valid"]:
             continue
         img = cv2.imread(str(r["image"]))
-        boxes = det(img, verbose=False)[0].boxes.xyxy.tolist()
+        boxes = det(img, imgsz=imgsz, verbose=False)[0].boxes.xyxy.tolist()
         best = max(boxes, key=lambda b: iou(b, r["box"]), default=None)
         hit = best is not None and iou(best, r["box"]) >= 0.5
         # OCR the ground-truth crop when the detector misses, so OCR is scored on its own.
@@ -85,7 +85,8 @@ if __name__ == "__main__":
     ap.add_argument("--reader", default="easyocr", help="'easyocr' or a CRNN .pt")
     ap.add_argument("--split", default="test")
     ap.add_argument("--out", default="reports/baseline.json")
+    ap.add_argument("--imgsz", type=int, default=640)
     a = ap.parse_args()
-    out = main(a.detector, a.reader, a.split)
+    out = main(a.detector, a.reader, a.split, a.imgsz)
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     Path(a.out).write_text(json.dumps(out, indent=2))

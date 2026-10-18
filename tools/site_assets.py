@@ -22,11 +22,12 @@ def baseline():
     """The results table. Every '+ plate rules' line re-applies the current corrector to the raw readings."""
     load = lambda f: json.loads(Path(f).read_text())
     b, f, r = load("reports/baseline.json"), load("reports/finetuned_easyocr.json"), load("reports/final_reader_v2.json")
+    w = load("reports/final_reader_v2_416.json")  # the site's own configuration: detector at 416 px
     raw = lambda rows: metrics.score([x["raw"] for x in rows], [x["truth"] for x in rows])
     fixed = lambda rows: metrics.score([plate.correct(x["raw"]) or x["raw"] for x in rows], [x["truth"] for x in rows])
     row = lambda name, sc, note="": {"name": name, "exact": sc["exact"], "ci": sc["exact_ci"], "cer": sc["cer"], "note": note}
     pts = lambda a, c: f"{(c['exact'] - a['exact']) * 100:+.1f} pts"
-    s1, s2, s3, s4, s5 = raw(b["rows"]), fixed(b["rows"]), fixed(f["rows"]), raw(r["rows"]), fixed(r["rows"])
+    s1, s2, s3, s4, s5, s6 = raw(b["rows"]), fixed(b["rows"]), fixed(f["rows"]), raw(r["rows"]), fixed(r["rows"]), fixed(w["rows"])
     v = vote.main("reports/final_reader_v2.json")
     return {
         "images": b["images"], "plates": b["plates"], "detection_recall": b["detection_recall@0.5"],
@@ -35,7 +36,8 @@ def baseline():
                  row("+ plate rules", s2, f"{pts(s1, s2)} from plate rules"),
                  row("Fine-tuned detector + EasyOCR + rules", s3),
                  row("Fine-tuned detector + synthetic-trained reader", s4, f"{pts(s3, s4)} over EasyOCR"),
-                 row("+ plate rules", s5, f"{pts(s4, s5)} from plate rules")],
+                 row("+ plate rules", s5, f"{pts(s4, s5)} from plate rules"),
+                 row("Same, detector at 416 px (what this site runs)", s6, "416 px chosen for speed on the training split, scored once")],
         "vote": v,
     }
 
@@ -124,7 +126,10 @@ if __name__ == "__main__":
     x1, y1, x2, y2 = b.xyxy[0].tolist()
     detect = {"box": [x1 / W, y1 / H, (x2 - x1) / W, (y2 - y1) / H], "conf": float(b.conf[0])}
 
-    site = {"baseline": baseline(), "audit": audit(), "corrector": corrector_examples(), "detect": detect,
+    import statistics
+    speed = json.loads(Path("reports/browser_speed.json").read_text())
+    speed = {k: round(statistics.median(speed[k]), 1) for k in ("single_thread_fps", "four_thread_fps")}
+    site = {"baseline": baseline(), "audit": audit(), "corrector": corrector_examples(), "detect": detect, "speed": speed,
             "pending": [],
             "states": sorted(plate.STATES)}
     (WEB / "data/site.json").write_text(json.dumps(site, indent=2))

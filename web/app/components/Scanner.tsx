@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type * as OrtNS from "onnxruntime-web";
 import {
-  correct, decode, letterbox, parseDetections, prepCrop, READER_H, READER_W, Tracker,
+  correct, decode, DET_SIZE, letterbox, parseDetections, prepCrop, READER_H, READER_W, Tracker,
   type Confirmed, type Read, type Reading,
 } from "@/lib/anpr";
 import { partName } from "@/lib/states";
@@ -61,7 +61,7 @@ export default function Scanner() {
       ort.InferenceSession.create(asset("/models/detector.onnx"), opts),
       ort.InferenceSession.create(asset("/models/reader.onnx"), opts),
     ]);
-    print("Models", "Ready. Detector YOLO26n, reader CRNN.");
+    print("Models", `Ready. Detector YOLO26n, reader CRNN, ${ort.env.wasm.numThreads} thread${ort.env.wasm.numThreads === 1 ? "" : "s"}.`);
     return (models.current = { ort, det, rdr });
   }
 
@@ -69,7 +69,7 @@ export default function Scanner() {
   async function readFrame(src: CanvasImageSource, w: number, h: number, m: Models) {
     const { ort, det, rdr } = m;
     const lb = letterbox(src, w, h, work.current!.det);
-    const out = await det.run({ [det.inputNames[0]]: new ort.Tensor("float32", lb.tensor, [1, 3, 640, 640]) });
+    const out = await det.run({ [det.inputNames[0]]: new ort.Tensor("float32", lb.tensor, [1, 3, DET_SIZE, DET_SIZE]) });
     const o = out[det.outputNames[0]];
     const found = parseDetections(o.data as Float32Array, o.dims, lb).sort((a, b) => b.score - a.score).slice(0, MAX_PLATES);
     const plates: { box: number[]; read: Read | null; raw: string }[] = [];

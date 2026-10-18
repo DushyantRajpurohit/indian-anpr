@@ -54,6 +54,16 @@
         ],
         "cer": 0.18179634966378483,
         "note": "+0.5 pts from plate rules"
+      },
+      {
+        "name": "Same, detector at 416 px (what this site runs)",
+        "exact": 0.5011600928074246,
+        "ci": [
+          0.45415400853696003,
+          0.5481456794413749
+        ],
+        "cer": 0.16522574447646493,
+        "note": "416 px chosen for speed on the training split, scored once"
       }
     ],
     "vote": {
@@ -131,6 +141,10 @@
       0.330626708984375
     ],
     "conf": 0.9160019755363464
+  },
+  "speed": {
+    "single_thread_fps": 1.4,
+    "four_thread_fps": 5.3
   },
   "pending": [],
   "states": [

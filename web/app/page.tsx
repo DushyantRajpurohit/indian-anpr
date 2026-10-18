@@ -43,7 +43,7 @@ export default function Home() {
       <Journey sample={sample} s={{
         detectionRecall: site.baseline.detection_recall, finetunedRecall: site.baseline.finetuned_recall, detectConf: site.detect.conf,
         baselineExact: baseline.exact, correctedExact: corrected.exact, validLabels: a.labelled_images - a.bad_labels, parityStrings: 4000,
-        easyocrExact: site.baseline.rows[2].exact, readerExact: site.baseline.rows[3].exact, vote: site.baseline.vote,
+        easyocrExact: site.baseline.rows[2].exact, readerExact: site.baseline.rows[3].exact, vote: site.baseline.vote, fps: site.speed,
       }} />
 
       <section className="chapter concrete" id="traps" aria-labelledby="h-traps">

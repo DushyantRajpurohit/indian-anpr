@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Big_Shoulders, Doto, Fragment_Mono, Hanken_Grotesk } from "next/font/google";
+import Isolation from "./components/Isolation";
 import "./globals.css";
 
 const sign = Big_Shoulders({ variable: "--font-sign", subsets: ["latin"], axes: ["opsz"] });
@@ -18,7 +19,7 @@ export const viewport: Viewport = { themeColor: "#ffc20e" };
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${sign.variable} ${led.variable} ${receipt.variable} ${body.variable}`}>
-      <body>{children}</body>
+      <body><Isolation />{children}</body>
     </html>
   );
 }
